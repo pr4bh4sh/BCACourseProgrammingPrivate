@@ -51,7 +51,7 @@ jobs:
           disable-animations: true
           script: |
             cd e2e
-            npm run android
+            npm run android:cucumber
 
       - name: Generate Allure Report
         if: always()

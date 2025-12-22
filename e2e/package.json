@@ -5,9 +5,9 @@
     "description": "Mobile E2E Automation Framework for React Native",
     "main": "index.js",
     "scripts": {
-        "android": "wdio run configs/wdio.android.conf.ts",
+        "android:cucumber": "wdio run configs/wdio.android.conf.ts",
         "ios": "wdio run configs/wdio.ios.conf.ts",
-        "test": "npm run android",
+        "test": "npm run android:cucumber",
         "download:android": "bash scripts/download-builds.sh android",
         "allure:generate": "allure generate allure-results --clean -o allure-report",
         "allure:open": "allure open allure-report",
