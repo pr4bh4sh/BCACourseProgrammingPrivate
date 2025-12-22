@@ -1,0 +1,28 @@
+# Project Setup
+
+Concise technical setup for **BCACourseProgramming**.
+
+### Prerequisites
+- **Node.js**: v20+
+- **Java**: 17+ (Required for React Native 0.82)
+- **Android SDK**: Build Tools v36, Compile SDK 36, Target SDK 36
+- **CocoaPods**: (iOS only)
+
+### Installation
+```bash
+npm install
+```
+
+### Running the App
+1. **Android**:
+   ```bash
+   npm run android
+   ```
+2. **iOS**:
+   ```bash
+   npm run ios
+   ```
+
+### Automation
+Selectors for automation tests are located in:
+`automation/selectors/*.yaml`

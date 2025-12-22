@@ -63,3 +63,7 @@ This project grows with the community. Whether you're fixing a typo or adding a 
    ```bash
    git clone https://github.com/DevVibhor/BCACourseProgramming
    ```
+
+
+### Documentation
+1. [Project Setup](SETUP.md)
