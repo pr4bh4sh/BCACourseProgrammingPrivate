@@ -13,19 +13,23 @@ const ListItems = ({ index, item, handleListClick }) => {
       style={[
         theme?.themeType === "dark"
           ? [
-              styles?.listItemContainer,
-              {
-                backgroundColor: theme?.bgColor,
-              },
-            ]
+            styles?.listItemContainer,
+            {
+              backgroundColor: theme?.bgColor,
+            },
+          ]
           : [
-              styles?.listItemContainer,
-              {
-                backgroundColor:
-                  index % 2 == 0 ? Colors?.BROWN : Colors?.DARKPURPLE,
-              },
-            ],
+            styles?.listItemContainer,
+            {
+              backgroundColor:
+                index % 2 == 0 ? Colors?.BROWN : Colors?.DARKPURPLE,
+            },
+          ],
       ]}
+      testID={`sem.item.${index}`}
+      accessible={true}
+      accessibilityLabel={item?.question}
+      accessibilityRole="button"
     >
       <Text style={styles?.textStyleList}>{item?.question}</Text>
     </TouchableOpacity>

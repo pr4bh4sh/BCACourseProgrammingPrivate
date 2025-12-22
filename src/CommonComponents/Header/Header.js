@@ -41,6 +41,10 @@ const Header = props => {
           activeOpacity={0.8}
           onPress={() => goBack()}
           style={styles?.backButtonStyle}
+          testID="header.button.back"
+          accessible={true}
+          accessibilityLabel="Back"
+          accessibilityRole="button"
         >
           <Icons name={'back'} width={28} height={28} fill={Colors?.WHITE} />
         </TouchableOpacity>
@@ -51,6 +55,10 @@ const Header = props => {
           activeOpacity={0.8}
           onPress={() => props?.bellIconButton()}
           style={styles?.backButtonStyle}
+          testID="header.button.notifications"
+          accessible={true}
+          accessibilityLabel="Notifications"
+          accessibilityRole="button"
         >
           <Image
             style={{ width: 20, height: 20, marginLeft: 5 }}
@@ -73,6 +81,10 @@ const Header = props => {
             right: 15,
             padding: 5,
           }}
+          testID="header.button.compilerOptions"
+          accessible={true}
+          accessibilityLabel="Compiler Options"
+          accessibilityRole="button"
         >
           <Image
             style={{ width: 30, height: 30 }}
@@ -86,6 +98,10 @@ const Header = props => {
           activeOpacity={0.8}
           onPress={() => toggleDrawer()}
           style={styles?.hamContainer}
+          testID="header.button.menu"
+          accessible={true}
+          accessibilityLabel="Open Menu"
+          accessibilityRole="button"
         >
           <Icons
             name={'hamburgerMenu'}

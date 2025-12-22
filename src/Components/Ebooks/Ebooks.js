@@ -39,6 +39,10 @@ const Ebooks = props => {
       <Pressable
         onPress={() => openPDF(item?.urls)}
         style={styles?.rowContainer}
+        testID={`ebook.item.${index}`}
+        accessible={true}
+        accessibilityLabel={item?.book}
+        accessibilityRole="button"
       >
         <Text style={{ color: theme?.textColor }}>• </Text>
         <Text style={styles?.bookName}>{item?.book}</Text>

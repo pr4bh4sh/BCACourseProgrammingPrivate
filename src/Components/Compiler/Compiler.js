@@ -16,7 +16,13 @@ const Compiler = props => {
       }}
     >
       <Header navigationProp={props?.navigation} back={true} title={title} />
-      <WebView source={{ uri: 'https://rextester.com/' }} style={{ flex: 1 }} />
+      <WebView
+        source={{ uri: 'https://rextester.com/' }}
+        style={{ flex: 1 }}
+        testID="compiler.webview"
+        accessible={true}
+        accessibilityLabel="Online Compiler WebView"
+      />
     </SafeAreaView>
   );
 };

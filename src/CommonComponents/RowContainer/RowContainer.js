@@ -68,6 +68,10 @@ const RowContainer = props => {
       activeOpacity={0.8}
       style={styles?.rowStyle}
       onPress={() => handleButtonClick(props?.buttonText)}
+      testID={props?.testID ?? `common.row.${props?.buttonText?.toLowerCase().replace(/\s+/g, '_')}`}
+      accessible={true}
+      accessibilityLabel={props?.titleText}
+      accessibilityRole="button"
     >
       {props?.image ? (
         <Icons

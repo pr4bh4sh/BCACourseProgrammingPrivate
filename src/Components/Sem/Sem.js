@@ -159,6 +159,10 @@ const Sem = props => {
                 backgroundColor: theme?.imageBG,
               },
             ]}
+            testID="sem.modal.language.button.close"
+            accessible={true}
+            accessibilityLabel="Close Language Selection"
+            accessibilityRole="button"
           >
             <Icons
               fill={theme?.imageFill}
@@ -183,6 +187,8 @@ const Sem = props => {
             fontSize={18}
             characterSide={'left'}
             transformed={title === 'Semester 3' ? true : false}
+            testID="sem.modal.language.card.left"
+            accessibilityLabel={title === 'Semester 3' ? "Data Structures" : "DBMS"}
           />
 
           <Card
@@ -200,6 +206,8 @@ const Sem = props => {
             side={'left'}
             bgColor={Colors?.DARKPURPLE}
             fontSize={title === 'Semester 3' ? 18 : 28}
+            testID="sem.modal.language.card.right"
+            accessibilityLabel={title === 'Semester 3' ? "OOPS" : "Java"}
           />
         </View>
       </View>
@@ -415,15 +423,15 @@ const Sem = props => {
                   ]}
                 >
                   {title === 'Semester 1' ||
-                  title === 'Semester 2' ||
-                  title === 'Semester 3' ||
-                  title === 'Semester 4'
+                    title === 'Semester 2' ||
+                    title === 'Semester 3' ||
+                    title === 'Semester 4'
                     ? Constants.cProgram
                     : title === 'Semester 5' && langSelected === 'DBMS'
-                    ? Constants.sqlProgram
-                    : title === 'Semester 5' && langSelected === 'Java'
-                    ? Constants.javaProgram
-                    : null}
+                      ? Constants.sqlProgram
+                      : title === 'Semester 5' && langSelected === 'Java'
+                        ? Constants.javaProgram
+                        : null}
                 </Text>
               ) : null}
             </>

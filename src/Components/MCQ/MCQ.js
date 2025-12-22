@@ -75,8 +75,8 @@ const MCQ = props => {
               score >= 80
                 ? Constants?.urls?.trophy1
                 : score < 80 && score >= 40
-                ? Constants?.urls?.trophy2
-                : Constants?.urls?.trophy3,
+                  ? Constants?.urls?.trophy2
+                  : Constants?.urls?.trophy3,
           }}
         />
         <Text
@@ -87,8 +87,8 @@ const MCQ = props => {
                 score >= 80
                   ? Colors?.lightGreen
                   : score < 80 && score >= 40
-                  ? Colors?.yellow
-                  : Colors?.RED,
+                    ? Colors?.yellow
+                    : Colors?.RED,
             },
           ]}
         >
@@ -127,9 +127,19 @@ const MCQ = props => {
             marginBottom: 10,
           }}
         >
-          <MainButton buttonWidth={'45%'} title="View Results" />
+          <MainButton
+            buttonWidth={'45%'}
+            title="View Results"
+            testID="mcq.modal.complete.button.viewResults"
+            accessibilityLabel="View Results"
+          />
 
-          <MainButton buttonWidth={'45%'} title="Challenge Friends" />
+          <MainButton
+            buttonWidth={'45%'}
+            title="Challenge Friends"
+            testID="mcq.modal.complete.button.challengeFriends"
+            accessibilityLabel="Challenge Friends"
+          />
         </View>
 
         <Text
@@ -139,6 +149,10 @@ const MCQ = props => {
             alignSelf: 'center',
             marginVertical: 10,
           }}
+          testID="mcq.modal.complete.button.back"
+          accessible={true}
+          accessibilityLabel="Go Back"
+          accessibilityRole="button"
         >
           Go Back
         </Text>
@@ -164,9 +178,9 @@ const MCQ = props => {
         mcqData.map(val =>
           val?.id === index
             ? {
-                ...val,
-                selected: selected,
-              }
+              ...val,
+              selected: selected,
+            }
             : val,
         ),
       );
@@ -193,9 +207,9 @@ const MCQ = props => {
         mcqData.map(val =>
           val?.id === index
             ? {
-                ...val,
-                selected: selected,
-              }
+              ...val,
+              selected: selected,
+            }
             : val,
         ),
       );
@@ -239,8 +253,8 @@ const MCQ = props => {
             item?.selected !== ''
               ? Colors?.lightGreen
               : startIndex === item?.id
-              ? theme?.countColorSelected
-              : theme?.countColorUnselected,
+                ? theme?.countColorSelected
+                : theme?.countColorUnselected,
           borderColor: Colors?.WHITE,
           borderWidth: 0.8,
           marginHorizontal: 10,
@@ -260,6 +274,10 @@ const MCQ = props => {
 
           elevation: item?.id === startIndex ? 10 : null,
         }}
+        testID={`mcq.index.${item?.id}`}
+        accessible={true}
+        accessibilityLabel={`Question ${item?.id + 1}`}
+        accessibilityRole="button"
       >
         <Text
           style={[
@@ -270,8 +288,8 @@ const MCQ = props => {
                 item?.selected !== ''
                   ? theme?.cardText
                   : startIndex === item?.id
-                  ? theme?.cardText
-                  : theme?.textColor,
+                    ? theme?.cardText
+                    : theme?.textColor,
             },
           ]}
         >
@@ -296,8 +314,8 @@ const MCQ = props => {
         </Text>
 
         {item?.code !== '' &&
-        item?.code !== undefined &&
-        item?.code !== null ? (
+          item?.code !== undefined &&
+          item?.code !== null ? (
           <SyntaxHighlighter
             fontSize={14}
             language="c"
@@ -317,6 +335,10 @@ const MCQ = props => {
                 item?.selected === 'A' ? Colors?.PRIMARY : theme?.background,
             },
           ]}
+          testID={`mcq.option.A`}
+          accessible={true}
+          accessibilityLabel={`Option A: ${item?.A}`}
+          accessibilityRole="button"
         >
           <Text
             style={[
@@ -352,6 +374,10 @@ const MCQ = props => {
                 item?.selected === 'B' ? Colors?.PRIMARY : theme?.background,
             },
           ]}
+          testID={`mcq.option.B`}
+          accessible={true}
+          accessibilityLabel={`Option B: ${item?.B}`}
+          accessibilityRole="button"
         >
           <Text
             style={[
@@ -387,6 +413,10 @@ const MCQ = props => {
                 item?.selected === 'C' ? Colors?.PRIMARY : theme?.background,
             },
           ]}
+          testID={`mcq.option.C`}
+          accessible={true}
+          accessibilityLabel={`Option C: ${item?.C}`}
+          accessibilityRole="button"
         >
           <Text
             style={[
@@ -422,6 +452,10 @@ const MCQ = props => {
                 item?.selected === 'D' ? Colors?.PRIMARY : theme?.background,
             },
           ]}
+          testID={`mcq.option.D`}
+          accessible={true}
+          accessibilityLabel={`Option D: ${item?.D}`}
+          accessibilityRole="button"
         >
           <Text
             style={[
@@ -550,6 +584,10 @@ const MCQ = props => {
             fontFamily: Fonts?.openSansRegular,
             fontSize: 16,
           }}
+          testID="mcq.button.exit"
+          accessible={true}
+          accessibilityLabel="Exit Quiz"
+          accessibilityRole="button"
         >
           Exit
         </Text>

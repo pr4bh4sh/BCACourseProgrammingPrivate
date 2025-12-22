@@ -63,6 +63,8 @@ const SupportUs = props => {
         <MainButton
           mainButtonPress={() => handleGithub()}
           title={Constants?.githubRepo}
+          testID="support.button.github"
+          accessibilityLabel="View Github Repository"
         />
       </View>
     </SafeAreaView>

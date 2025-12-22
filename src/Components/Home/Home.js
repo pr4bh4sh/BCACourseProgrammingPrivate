@@ -311,6 +311,10 @@ const Home = props => {
                 right: 10,
               },
             ]}
+            testID="home.modal.rateUs.button.close"
+            accessible={true}
+            accessibilityLabel="Close Rate Us Modal"
+            accessibilityRole="button"
           >
             <Icons
               fill={theme?.imageFill}
@@ -336,7 +340,12 @@ const Home = props => {
             {Constants?.ratingMessage}
           </Text>
 
-          <MainButton title="Rate Now" mainButtonPress={() => rateNow()} />
+          <MainButton
+            title="Rate Now"
+            mainButtonPress={() => rateNow()}
+            testID="home.modal.rateUs.button.rateNow"
+            accessibilityLabel="Rate Now"
+          />
         </View>
       </View>
     );
@@ -418,6 +427,10 @@ const Home = props => {
                   backgroundColor: theme?.imageBG,
                 },
               ]}
+              testID="home.modal.update.button.close"
+              accessible={true}
+              accessibilityLabel="Close Update Modal"
+              accessibilityRole="button"
             >
               <Icons
                 fill={theme?.imageFill}
@@ -438,7 +451,12 @@ const Home = props => {
             renderItem={({ item }) => RenderUpdateList(item)}
           />
 
-          <MainButton title="Update Now" mainButtonPress={() => updateNow()} />
+          <MainButton
+            title="Update Now"
+            mainButtonPress={() => updateNow()}
+            testID="home.modal.update.button.updateNow"
+            accessibilityLabel="Update Now"
+          />
 
           {forcedUpdate === false ? null : (
             <View
@@ -595,6 +613,8 @@ const Home = props => {
             buttonWidth={'50%'}
             title={item?.button}
             mainButtonPress={() => onPressNotificationNavigation(item?.url)}
+            testID={`home.notification.${index}.button`}
+            accessibilityLabel={item?.button}
           />
         ) : null}
       </View>
@@ -794,6 +814,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.sem1"
+            accessibilityLabel="Semester 1"
           />
 
           <Card
@@ -808,6 +830,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.DARKPURPLE
             }
+            testID="home.card.sem2"
+            accessibilityLabel="Semester 2"
           />
 
           <Card
@@ -823,6 +847,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.DARKPURPLE
             }
+            testID="home.card.sem3"
+            accessibilityLabel="Semester 3"
           />
 
           <Card
@@ -837,6 +863,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.sem4"
+            accessibilityLabel="Semester 4"
           />
 
           <Card
@@ -851,6 +879,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.sem5"
+            accessibilityLabel="Semester 5"
           />
 
           <Card
@@ -866,6 +896,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.DARKPURPLE
             }
+            testID="home.card.sem6"
+            accessibilityLabel="Semester 6"
           />
 
           {/* <Card
@@ -906,6 +938,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.interview"
+            accessibilityLabel="Interview Questions"
           />
 
           <Card
@@ -920,6 +954,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.DARKPURPLE
             }
+            testID="home.card.blog"
+            accessibilityLabel="Career Guidance"
           />
 
           <Card
@@ -933,6 +969,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.THEMEDARKBLACK
             }
+            testID="home.card.compiler"
+            accessibilityLabel="Online Compiler"
           />
 
           <Card
@@ -946,6 +984,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.rateUs"
+            accessibilityLabel="Rate Us"
           />
 
           <Card
@@ -959,6 +999,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.BROWN
             }
+            testID="home.card.share"
+            accessibilityLabel="Share with Friends"
           />
 
           <Card
@@ -972,6 +1014,8 @@ const Home = props => {
                 ? Colors?.THEMEDARKBLACK
                 : Colors?.THEMEDARKBLACK
             }
+            testID="home.card.contribute"
+            accessibilityLabel="Contribute"
           />
         </View>
 

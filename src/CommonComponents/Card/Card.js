@@ -199,6 +199,10 @@ const Card = (props) => {
             backgroundColor: props?.bgColor,
           },
         ]}
+        testID={props?.testID}
+        accessible={true}
+        accessibilityLabel={props?.accessibilityLabel ?? props?.title ?? props?.newTitle ?? "Card"}
+        accessibilityRole="button"
       >
         {props?.localImage ? (
           <View

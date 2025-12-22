@@ -17,11 +17,15 @@ const TabContainer = (props) => {
         style={
           props?.notes === true
             ? [
-                styles?.buttonStyle,
-                { backgroundColor: `${Colors?.PRIMARY}40`, width: "80%" },
-              ]
+              styles?.buttonStyle,
+              { backgroundColor: `${Colors?.PRIMARY}40`, width: "80%" },
+            ]
             : styles?.buttonStyle
         }
+        testID="common.tab.notes"
+        accessible={true}
+        accessibilityLabel="Notes Tab"
+        accessibilityRole="tab"
       >
         <Image
           style={{
@@ -49,11 +53,15 @@ const TabContainer = (props) => {
         style={
           props?.code === true
             ? [
-                styles?.buttonStyle,
-                { backgroundColor: `${Colors?.PRIMARY}40`, width: "80%" },
-              ]
+              styles?.buttonStyle,
+              { backgroundColor: `${Colors?.PRIMARY}40`, width: "80%" },
+            ]
             : styles?.buttonStyle
         }
+        testID="common.tab.code"
+        accessible={true}
+        accessibilityLabel="Code Tab"
+        accessibilityRole="tab"
       >
         <Image
           style={{

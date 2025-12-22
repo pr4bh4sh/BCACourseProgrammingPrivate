@@ -18,6 +18,10 @@ const BlogFlatList = ({ item, index, handleItemClick }) => {
         alignSelf: "center",
         borderRadius: 10,
       }}
+      testID={`blog.item.${index}`}
+      accessible={true}
+      accessibilityLabel={item?.title}
+      accessibilityRole="button"
     >
       <Image
         source={

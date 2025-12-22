@@ -20,6 +20,10 @@ const MainButton = (props) => {
       onPress={() => {
         props?.mainButtonPress();
       }}
+      testID={props?.testID}
+      accessible={true}
+      accessibilityLabel={props?.accessibilityLabel ?? props?.title}
+      accessibilityRole="button"
     >
       {props?.image ? (
         <Image

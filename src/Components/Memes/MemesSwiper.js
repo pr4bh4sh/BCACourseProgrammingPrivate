@@ -45,6 +45,8 @@ const MemesSwiper = ({ card, downloadPhoto, sharePhoto }) => {
           image={require("../../Assets/Images/download.png")}
           mainButtonPress={() => downloadPhoto(card?.meme)}
           buttonWidth={"45%"}
+          testID="memes.button.save"
+          accessibilityLabel="Save Meme to Gallery"
         />
 
         <MainButton
@@ -52,6 +54,8 @@ const MemesSwiper = ({ card, downloadPhoto, sharePhoto }) => {
           image={require("../../Assets/Images/send.png")}
           mainButtonPress={() => sharePhoto(card?.meme)}
           buttonWidth={"45%"}
+          testID="memes.button.share"
+          accessibilityLabel="Share Meme"
         />
       </View>
     </View>

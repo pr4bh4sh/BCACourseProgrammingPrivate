@@ -19,6 +19,10 @@ const InterviewFlatList = ({ item, index, handleItemClick }) => {
         alignSelf: "center",
         borderRadius: 10,
       }}
+      testID={`interview.item.${index}`}
+      accessible={true}
+      accessibilityLabel={item?.title}
+      accessibilityRole="button"
     >
       <Image
         source={

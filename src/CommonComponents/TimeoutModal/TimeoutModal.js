@@ -31,6 +31,10 @@ const TimeoutModal = (props) => {
               paddingVertical: 5,
             },
           ]}
+          testID="common.modal.timeout.button.close"
+          accessible={true}
+          accessibilityLabel="Close Timeout Modal"
+          accessibilityRole="button"
         >
           <Icons
             fill={Colors?.THEMEWHITE}
@@ -65,6 +69,8 @@ const TimeoutModal = (props) => {
         <MainButton
           title={Constants?.tryAgain}
           mainButtonPress={() => props?.tryAgain()}
+          testID="common.modal.timeout.button.tryAgain"
+          accessibilityLabel="Try Again"
         />
       </View>
     </View>

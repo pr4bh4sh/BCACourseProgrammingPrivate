@@ -34,6 +34,10 @@ const Menubar = props => {
             backgroundColor: theme?.imageBG,
           },
         ]}
+        testID="menubar.button.close"
+        accessible={true}
+        accessibilityLabel="Close Drawer"
+        accessibilityRole="button"
       >
         <Icons fill={theme?.imageFill} width={20} height={20} name={'close'} />
       </TouchableOpacity>
