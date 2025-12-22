@@ -10,6 +10,9 @@ Then(/^I should see the "([^"]*)"$/, async (label) => {
     await expect(HomePage.getElementByLabel(label)).toBeDisplayed();
 });
 
-Then(/^I should see the "([^"]*)" card$/, async (label) => {
-    await expect(HomePage.getElementByLabel(label)).toBeDisplayed();
+Then(/^I should see the following cards:$/, async (dataTable: any) => {
+    const cards = dataTable.raw();
+    for (const card of cards) {
+        await expect(HomePage.getElementByLabel(card[0])).toBeDisplayed();
+    }
 });
