@@ -1,0 +1,29 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_menu: "header.button.menu"
+  tabs:
+    notes: "common.tab.notes"
+    code: "common.tab.code"
+  list:
+    item: "sem.item.${index}"
+  modal:
+    language:
+      button_close: "sem.modal.language.button.close"
+      card_left: "sem.modal.language.card.left"
+      card_right: "sem.modal.language.card.right"
+
+labels:
+  header:
+    back: "Back"
+    menu: "Open Menu"
+  tabs:
+    notes: "Notes Tab"
+    code: "Code Tab"
+  modal:
+    language:
+      close: "Close Language Selection"
+      ds: "Data Structures"
+      dbms: "Database Management System"
+      oops: "Object Oriented Programming"
+      java: "Java"

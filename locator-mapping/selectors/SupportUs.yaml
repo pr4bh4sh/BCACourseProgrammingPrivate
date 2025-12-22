@@ -1,0 +1,13 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_menu: "header.button.menu"
+  button:
+    github: "support.button.github"
+
+labels:
+  header:
+    back: "Back"
+    menu: "Open Menu"
+  button:
+    github: "View Github Repository"

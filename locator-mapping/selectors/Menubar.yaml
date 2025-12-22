@@ -1,0 +1,31 @@
+selectors:
+  button_close: "menubar.button.close"
+  row:
+    csharp: "common.row.c#"
+    css: "common.row.css"
+    html: "common.row.html"
+    javascript: "common.row.javascript"
+    r: "common.row.r"
+    python: "common.row.python"
+    sql: "common.row.sql"
+    youtube: "common.row.youtube"
+    twitter: "common.row.twitter"
+    suggestions: "common.row.suggestions"
+    report: "common.row.report"
+    privacy: "common.row.privacy"
+
+labels:
+  close: "Close Menu"
+  row:
+    csharp: "C# Programming"
+    css: "CSS"
+    html: "HTML"
+    javascript: "JavaScript"
+    r: "R Programming"
+    python: "Python"
+    sql: "SQL"
+    youtube: "Follow us on Youtube"
+    twitter: "Follow us on Twitter"
+    suggestions: "Suggestions"
+    report: "Report a bug"
+    privacy: "Privacy Policy"

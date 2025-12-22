@@ -1,0 +1,19 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_menu: "header.button.menu"
+  list:
+    item: "blog.item.${index}"
+  modal:
+    timeout:
+      button_close: "common.modal.timeout.button.close"
+      button_try_again: "common.modal.timeout.button.tryAgain"
+
+labels:
+  header:
+    back: "Back"
+    menu: "Open Menu"
+  modal:
+    timeout:
+      close: "Close Timeout Modal"
+      try_again: "Try Again"

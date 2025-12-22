@@ -1,0 +1,11 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_menu: "header.button.menu"
+  list:
+    item: "ebook.item.${index}"
+
+labels:
+  header:
+    back: "Back"
+    menu: "Open Menu"

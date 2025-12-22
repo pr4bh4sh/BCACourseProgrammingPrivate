@@ -1,0 +1,25 @@
+selectors:
+  button_exit: "mcq.button.exit"
+  index: "mcq.index.${id}"
+  option:
+    A: "mcq.option.A"
+    B: "mcq.option.B"
+    C: "mcq.option.C"
+    D: "mcq.option.D"
+  modal:
+    complete:
+      button_view_results: "mcq.modal.complete.button.viewResults"
+      button_challenge_friends: "mcq.modal.complete.button.challengeFriends"
+      button_back: "mcq.modal.complete.button.back"
+
+labels:
+  exit: "Exit Quiz"
+  options:
+    A: "Option A"
+    B: "Option B"
+    C: "Option C"
+    D: "Option D"
+  modal:
+    view_results: "View Results"
+    challenge_friends: "Challenge Friends"
+    back: "Go Back"

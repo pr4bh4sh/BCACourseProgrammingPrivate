@@ -1,0 +1,15 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_menu: "header.button.menu"
+  button:
+    save: "memes.button.save"
+    share: "memes.button.share"
+
+labels:
+  header:
+    back: "Back"
+    menu: "Open Menu"
+  button:
+    save: "Save Meme"
+    share: "Share Meme"

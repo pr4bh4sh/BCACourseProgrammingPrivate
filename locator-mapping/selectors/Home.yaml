@@ -1,0 +1,53 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+    button_notifications: "header.button.notifications"
+    button_menu: "header.button.menu"
+  card:
+    sem_1: "home.card.sem1"
+    sem_2: "home.card.sem2"
+    sem_3: "home.card.sem3"
+    sem_4: "home.card.sem4"
+    sem_5: "home.card.sem5"
+    sem_6: "home.card.sem6"
+    interview: "home.card.interview"
+    blog: "home.card.blog"
+    compiler: "home.card.compiler"
+    rate_us: "home.card.rateUs"
+    share: "home.card.share"
+    contribute: "home.card.contribute"
+  modal:
+    rate_us:
+      button_close: "home.modal.rateUs.button.close"
+      button_rate_now: "home.modal.rateUs.button.rateNow"
+    update:
+      button_close: "home.modal.update.button.close"
+      button_update_now: "home.modal.update.button.updateNow"
+  notification:
+    button: "home.notification.${index}.button"
+
+labels:
+  header:
+    back: "Back"
+    notifications: "Notifications"
+    menu: "Open Menu"
+  card:
+    sem_1: "Semester 1"
+    sem_2: "Semester 2"
+    sem_3: "Semester 3"
+    sem_4: "Semester 4"
+    sem_5: "Semester 5"
+    sem_6: "Semester 6"
+    interview: "Interview Questions"
+    blog: "Career Guidance"
+    compiler: "Online Compiler"
+    rate_us: "Rate Us"
+    share: "Share with Friends"
+    contribute: "Contribute"
+  modal:
+    rate_us:
+      close: "Close Rate Us Modal"
+      rate_now: "Rate Now"
+    update:
+      close: "Close Update Modal"
+      update_now: "Update Now"

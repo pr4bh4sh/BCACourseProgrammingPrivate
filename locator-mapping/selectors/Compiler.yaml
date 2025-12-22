@@ -1,0 +1,9 @@
+selectors:
+  header:
+    button_back: "header.button.back"
+  webview: "compiler.webview"
+
+labels:
+  header:
+    back: "Back"
+  webview: "Online Compiler WebView"
