@@ -112,3 +112,6 @@ tmp/
 *.json
 !e2e/**/*.json
 !e2e/*.json
+e2e/allure-report
+e2e/allure-results
+

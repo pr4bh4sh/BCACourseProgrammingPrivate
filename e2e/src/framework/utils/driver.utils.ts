@@ -1,3 +1,4 @@
+import { browser, $ } from '@wdio/globals';
 export default class DriverUtils {
     /**
      * Wait for element to be displayed

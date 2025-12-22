@@ -1,3 +1,4 @@
+import { $ } from '@wdio/globals';
 export default class BasePage {
     /**
      * Wait for element to be displayed
