@@ -65,7 +65,12 @@ export const config: Options.Testrunner = {
 
             // Capture UI Source Dump
             const source = await browser.getPageSource();
-            allureReporter.addAttachment('UI Source Dump', source, 'text/xml');
+            if (source) {
+                console.log(`Captured UI Source Dump, length: ${source.length}`);
+                allureReporter.addAttachment('UI Source Dump', source, 'application/xml');
+            } else {
+                console.warn('Captured UI Source Dump is empty');
+            }
         }
     },
     afterScenario: async function (world: any, result: any) {
