@@ -44,6 +44,7 @@ local.properties
 *.hprof
 .cxx/
 .kotlin/
+apps/
 
 # Keystores (prevent sensitive signing files)
 *.keystore
@@ -102,3 +103,10 @@ tmp/
 *.swp
 *.swo
 *.orig
+
+# ===============================
+# Verification Artifacts & Metadata
+# ===============================
+*.xml
+*.png
+*.json
