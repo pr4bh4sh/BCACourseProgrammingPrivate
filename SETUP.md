@@ -11,6 +11,7 @@ Concise technical setup for **BCACourseProgramming**.
 ### Installation
 ```bash
 npm install
+cd ios && pod install  # Required for iOS
 ```
 
 ### Running the App
@@ -26,3 +27,7 @@ npm install
 ### Automation
 Selectors for automation tests are located in:
 `automation/selectors/*.yaml`
+
+### Tips
+- Use `npx react-native doctor` to check for any missing dependencies.
+
