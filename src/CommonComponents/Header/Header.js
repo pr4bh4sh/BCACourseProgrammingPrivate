@@ -45,8 +45,11 @@ const Header = props => {
           accessible={true}
           accessibilityLabel="Back"
           accessibilityRole="button"
+          importantForAccessibility="yes"
         >
-          <Icons name={'back'} width={28} height={28} fill={Colors?.WHITE} />
+          <View importantForAccessibility="no-hide-descendants">
+            <Icons name={'back'} width={28} height={28} fill={Colors?.WHITE} />
+          </View>
         </TouchableOpacity>
       ) : null}
 
@@ -102,13 +105,16 @@ const Header = props => {
           accessible={true}
           accessibilityLabel="Open Menu"
           accessibilityRole="button"
+          importantForAccessibility="yes"
         >
-          <Icons
-            name={'hamburgerMenu'}
-            width={28}
-            height={28}
-            fill={theme?.hamFill}
-          />
+          <View importantForAccessibility="no-hide-descendants">
+            <Icons
+              name={'hamburgerMenu'}
+              width={28}
+              height={28}
+              fill={theme?.hamFill}
+            />
+          </View>
         </TouchableOpacity>
       ) : null}
     </View>

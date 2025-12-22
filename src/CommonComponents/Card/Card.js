@@ -15,8 +15,13 @@ const Card = (props) => {
           styles?.mainContainer,
           { backgroundColor: props?.bgColor, width: "90%", height: 120 },
         ]}
+        testID={props?.testID}
+        accessible={true}
+        accessibilityLabel={props?.accessibilityLabel ?? (props?.titleNum ? `${props?.titleNum}${props?.title} ${Constants?.semester}` : (props?.newTitle ?? "Card"))}
+        accessibilityRole="button"
+        importantForAccessibility="yes"
       >
-        <View style={styles?.textContainer}>
+        <View importantForAccessibility="no-hide-descendants" style={styles?.textContainer}>
           {props?.titleNum ? (
             <Text
               style={[
@@ -70,7 +75,7 @@ const Card = (props) => {
           ) : null}
         </View>
 
-        <View style={{ transform: [{ rotateY: "180deg" }] }}>
+        <View importantForAccessibility="no-hide-descendants" style={{ transform: [{ rotateY: "180deg" }] }}>
           {props?.localImage ? (
             <View
               style={[
@@ -102,8 +107,14 @@ const Card = (props) => {
           styles?.mainContainer,
           { backgroundColor: props?.bgColor, width: "90%", height: 120 },
         ]}
+        testID={props?.testID}
+        accessible={true}
+        accessibilityLabel={props?.accessibilityLabel ?? (props?.titleNum ? `${props?.titleNum}${props?.title} ${Constants?.semester}` : (props?.newTitle ?? "Card"))}
+        accessibilityRole="button"
+        importantForAccessibility="yes"
       >
         <View
+          importantForAccessibility="no-hide-descendants"
           style={{
             transform:
               props?.transformed === true
@@ -112,13 +123,6 @@ const Card = (props) => {
             marginLeft: props?.transformed === true ? 20 : null,
           }}
         >
-          {/* {props?.image ? (
-            <>
-              <View style={styles?.boyImageStyle}></View>
-              <Icons width={165} height={185} name={props?.image} />
-            </>
-          ) : null} */}
-
           {props?.localImage ? (
             <View style={styles?.imageStyleLeft}>
               <Image
@@ -135,6 +139,7 @@ const Card = (props) => {
         </View>
 
         <View
+          importantForAccessibility="no-hide-descendants"
           style={{
             flexDirection: "row",
             alignSelf: "center",
@@ -201,11 +206,13 @@ const Card = (props) => {
         ]}
         testID={props?.testID}
         accessible={true}
-        accessibilityLabel={props?.accessibilityLabel ?? props?.title ?? props?.newTitle ?? "Card"}
+        accessibilityLabel={props?.accessibilityLabel ?? (props?.titleNum ? `${props?.titleNum}${props?.title} ${Constants?.semester}` : (props?.newTitle ?? "Card"))}
         accessibilityRole="button"
+        importantForAccessibility="yes"
       >
         {props?.localImage ? (
           <View
+            importantForAccessibility="no-hide-descendants"
             style={[
               styles?.imageStyleLeft,
               {
@@ -232,6 +239,7 @@ const Card = (props) => {
         ) : null}
 
         <View
+          importantForAccessibility="no-hide-descendants"
           style={{
             flexDirection: "row",
             alignSelf: "center",

@@ -72,6 +72,7 @@ const RowContainer = props => {
       accessible={true}
       accessibilityLabel={props?.titleText}
       accessibilityRole="button"
+      importantForAccessibility="yes"
     >
       {props?.image ? (
         <Icons

@@ -188,7 +188,7 @@ const Sem = props => {
             characterSide={'left'}
             transformed={title === 'Semester 3' ? true : false}
             testID="sem.modal.language.card.left"
-            accessibilityLabel={title === 'Semester 3' ? "Data Structures" : "DBMS"}
+            accessibilityLabel={title === 'Semester 3' ? "Data Structures" : "Database Management System"}
           />
 
           <Card
@@ -207,7 +207,7 @@ const Sem = props => {
             bgColor={Colors?.DARKPURPLE}
             fontSize={title === 'Semester 3' ? 18 : 28}
             testID="sem.modal.language.card.right"
-            accessibilityLabel={title === 'Semester 3' ? "OOPS" : "Java"}
+            accessibilityLabel={title === 'Semester 3' ? "Object Oriented Programming" : "Java"}
           />
         </View>
       </View>
