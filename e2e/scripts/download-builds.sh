@@ -7,7 +7,7 @@ REPO="pr4bh4sh/BCACourseProgrammingPrivate"
 # Get the directory where the script is located
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # Target directory for downloads (relative to e2e folder)
-TARGET_DIR="$SCRIPT_DIR/../apps"
+TARGET_DIR="$SCRIPT_DIR/../../apps"
 
 PLATFORM=$1 # android, ios, or all (default)
 
