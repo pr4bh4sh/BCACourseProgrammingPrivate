@@ -54,7 +54,16 @@ export const config: Options.Testrunner = {
         timeout: 60000,
         ignoreUndefinedDefinitions: false
     },
-    beforeScenario: async function () {
+    beforeScenario: async function (world: any) {
+        // Generate scenario-specific log file name
+        const scenarioName = world.pickle.name.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+        const timestamp = new Date().getTime();
+        const logFileName = `./appium-${scenarioName}-${timestamp}.log`;
+
+        // Store log file name for later use in afterScenario
+        (global as any).currentAppiumLog = logFileName;
+
+        // Start recording for this scenario
         await browser.startRecordingScreen();
     },
     afterStep: async function (step: any, scenario: any, result: any, context: any) {
@@ -83,15 +92,23 @@ export const config: Options.Testrunner = {
             const logcat = await browser.getLogs('logcat');
             allureReporter.addAttachment('ADB Logs (Logcat)', JSON.stringify(logcat, null, 2), 'application/json');
 
-            // Attach Appium Server Logs from file
+            // Attach scenario-specific Appium Server Logs
+            const logFileName = (global as any).currentAppiumLog || './appium.log';
             try {
-                if (fs.existsSync('./appium.log')) {
-                    const serverLogs = fs.readFileSync('./appium.log', 'utf8');
+                if (fs.existsSync(logFileName)) {
+                    const serverLogs = fs.readFileSync(logFileName, 'utf8');
                     allureReporter.addAttachment('Appium Server Logs', serverLogs, 'text/plain');
                 }
             } catch (e) {
                 console.warn('Failed to attach Appium server logs:', e);
             }
         }
+
+        // Reload session to get fresh app state for next scenario
+        // This terminates the current session and creates a new one
+        await browser.reloadSession();
+    },
+    beforeSession: async function (config: any, capabilities: any) {
+        console.log('Creating new session for scenario');
     }
 };
