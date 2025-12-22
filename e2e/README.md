@@ -4,11 +4,11 @@ This directory contains a production-quality mobile automation framework for the
 
 ## Tech Stack
 
-- **WebdriverIO v8+**: Test runner for mobile and web.
+- **WebdriverIO v9**: The test runner for mobile and web.
 - **TypeScript**: Ensuring type safety and better developer experience.
 - **Appium**: Mobile automation engine.
 - **Cucumber (BDD)**: Writing tests in plain English using Gherkin syntax.
-- **Allure Reporting**: Detailed and visual test execution reports.
+- **Allure Reporting**: Detailed and visual test execution reports with advanced debugging artifacts.
 - **GitHub Actions**: Continuous Integration for running tests on emulators.
 
 ## Project Structure
@@ -67,6 +67,18 @@ After running tests, generate and view the Allure report:
 ```bash
 npm run allure:report
 ```
+
+### Advanced Failure Reporting & Debugging
+
+The framework is configured to automatically attach the following artifacts to the Allure report on any failure:
+
+- **Screenshots**: High-resolution image capture at the moment of failure.
+- **UI Source Dump**: XML/HTML page source (`getPageSource()`) to inspect the element hierarchy for selector debugging.
+- **Execution Video**: Full recording of the test scenario using Appium's native screen recording.
+- **Appium Server Logs**: Detailed logs from the Appium server process for infrastructure debugging.
+- **ADB Logcat**: Full Android system logs (useful for identifying crashes or backend API issues).
+
+To view these, simply open the Allure report, select a failed test case, and look at the **Attachments** section at the bottom.
 
 ## CI/CD
 

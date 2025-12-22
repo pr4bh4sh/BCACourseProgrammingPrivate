@@ -4,9 +4,9 @@ Feature: Home Screen Verification
     So that I can navigate to different semesters and tools
 
     Scenario: Verify main dashboard components using natural accessibility labels
-        Given the "Drawer Button" is displayed
-        Then I should see the "Drawer Button"
-        And I should see the "1st Sem" card
-        And I should see the "6th Sem" card
-        And I should see the "Code_🔥 Compiler" card
-        And I should see the "Career_🎓 Guidance" card
+        Given the "Open Menu" is displayed
+        Then I should see the "Open Menu"
+        And I should see the "Semester 1" card
+        And I should see the "Semester 6" card
+        And I should see the "Online Compiler" card
+        And I should see the "Career Guidance" card

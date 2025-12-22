@@ -59,8 +59,13 @@ export const config: Options.Testrunner = {
     },
     afterStep: async function (step: any, scenario: any, result: any, context: any) {
         if (!result.passed) {
+            // Capture Screenshot
             const screenshot = await browser.takeScreenshot();
             allureReporter.addAttachment('Screenshot', Buffer.from(screenshot, 'base64'), 'image/png');
+
+            // Capture UI Source Dump
+            const source = await browser.getPageSource();
+            allureReporter.addAttachment('UI Source Dump', source, 'text/xml');
         }
     },
     afterScenario: async function (world: any, result: any) {
