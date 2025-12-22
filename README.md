@@ -66,4 +66,4 @@ This project grows with the community. Whether you're fixing a typo or adding a 
 
 
 ### Documentation
-1. [Project Setup](SETUP.md)
+1. [Development & Setup](Development.md)
