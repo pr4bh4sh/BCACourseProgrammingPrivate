@@ -24,16 +24,12 @@ jobs:
           cache-dependency-path: e2e/package.json
 
       - name: Install E2E Dependencies
-        run: |
-          cd e2e
-          npm install
+        run: cd e2e && npm install
 
       - name: Download Debug APK
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd e2e
-          npm run download:android
+        run: cd e2e && npm run download:android
 
       - name: Enable KVM group perms
         run: |
@@ -44,20 +40,16 @@ jobs:
       - name: Run Android Tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
-          api-level: 33
+          api-level: 36
           target: google_apis
           arch: x86_64
           force-avd-creation: false
           disable-animations: true
-          script: |
-            cd e2e
-            npm run android:cucumber
+          script: cd e2e && npm run android:cucumber
 
       - name: Generate Allure Report
         if: always()
-        run: |
-          cd e2e
-          npm run allure:generate
+        run: cd e2e && npm run allure:generate
 
       - name: Upload Allure Report Artifact
         if: always()
