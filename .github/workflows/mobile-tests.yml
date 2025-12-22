@@ -65,3 +65,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: e2e/allure-report
           publish_branch: gh-pages
+
+      - name: Log GitHub Pages URL
+        if: always()
+        run: echo "GitHub Pages URL https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
