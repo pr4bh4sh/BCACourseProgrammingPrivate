@@ -41,7 +41,7 @@ export const config: Options.Testrunner = {
     //
     logLevel: 'info',
     bail: 0,
-    waitforTimeout: 45000,
+    waitforTimeout: 15000,
     connectionRetryTimeout: 120000,
     connectionRetryCount: 3,
     
