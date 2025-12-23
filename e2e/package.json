@@ -6,7 +6,7 @@
     "main": "index.js",
     "scripts": {
         "android:cucumber": "wdio run configs/wdio.android.app.cucumber.conf.ts",
-        "android:browserstack": "wdio run configs/wdio.android.bs.app.conf.ts",
+        "android:browserstack": "wdio run configs/browserstack/wdio.android.bs.app.conf.ts",
         "ios": "wdio run configs/wdio.ios.conf.ts",
         "test": "npm run android:cucumber",
         "download:android": "bash scripts/download-builds.sh android",

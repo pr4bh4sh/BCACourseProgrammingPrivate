@@ -96,5 +96,19 @@ export const config = {
                 waitForSelectorTimeout: 3 * 1000
             });
         }
+    },
+
+    /**
+     * Gets executed after all workers got shut down and the process is about to exit.
+     */
+    onComplete: function() {
+        const port = process.env.PORT || '4723';
+        try {
+            // Kill any process running on the Appium port to ensure a clean exit
+            execSync(`lsof -t -i:${port} | xargs kill -9`, { stdio: 'ignore' });
+            console.log(`\n✅ Appium server on port ${port} has been terminated.\n`);
+        } catch {
+            // Ignore if no process was found
+        }
     }
 };
