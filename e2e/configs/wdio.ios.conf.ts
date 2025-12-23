@@ -1,13 +1,14 @@
-import { config as baseConfig } from './wdio.conf';
+import { config as localAppiumConfig } from './wdio.shared.local.appium.conf.js';
 import path from 'path';
 
 export const config = {
-    ...baseConfig,
+    ...localAppiumConfig,
     capabilities: [{
-        'appium:platformName': 'iOS',
+        platformName: 'iOS',
         'appium:automationName': 'XCUITest',
         'appium:deviceName': 'iPhone Simulator',
-        'appium:app': path.join(process.cwd(), '../ios/build/Build/Products/Debug-iphonesimulator/BCACourseProgramming.app'), // Adjust path as needed
+        'appium:platformVersion': '15.0',
+        'appium:app': path.join(process.cwd(), '../ios/build/Build/Products/Debug-iphonesimulator/BCACourseProgramming.app'),
         'appium:newCommandTimeout': 240,
         'appium:noReset': false,
     }],
