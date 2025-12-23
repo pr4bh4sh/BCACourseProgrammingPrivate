@@ -73,4 +73,58 @@ export default class ElementUtils {
     static getElementByLabel(label: string) {
         return $(`~${label}`);
     }
+
+    /**
+     * Click element by accessibility label with wait for display
+     * @param label - The accessibility label to click
+     * @param timeout - Optional timeout in milliseconds (default: 15000)
+     */
+    static async clickByLabel(label: string, timeout = 15000) {
+        const element = this.getElementByLabel(label);
+        await element.waitForDisplayed({ timeout });
+        await element.click();
+    }
+
+    /**
+     * Click element by resource ID with wait for display
+     * @param id - The resource ID to click
+     * @param timeout - Optional timeout in milliseconds (default: 15000)
+     */
+    static async clickById(id: string, timeout = 15000) {
+        const element = this.getElementById(id);
+        await element.waitForDisplayed({ timeout });
+        await element.click();
+    }
+
+    /**
+     * Click element by text content with wait for display
+     * @param text - The text content to click
+     * @param timeout - Optional timeout in milliseconds (default: 15000)
+     */
+    static async clickByText(text: string, timeout = 15000) {
+        const element = this.getElementByText(text);
+        await element.waitForDisplayed({ timeout });
+        await element.click();
+    }
+
+    /**
+     * Generic click method - click an element after waiting for it to be displayed
+     * @param element - The WebdriverIO element to click
+     * @param timeout - Optional timeout in milliseconds (default: 15000)
+     */
+    static async clickElement(element: any, timeout = 15000) {
+        await element.waitForDisplayed({ timeout });
+        await element.click();
+    }
+
+    /**
+     * Check if an element is displayed - waits for element and returns boolean
+     * @param element - The WebdriverIO element to check
+     * @param timeout - Optional timeout in milliseconds (default: 10000)
+     * @returns true if element is displayed, false otherwise
+     */
+    static async isElementDisplayed(element: any, timeout = 10000): Promise<boolean> {
+        await element.waitForDisplayed({ timeout });
+        return await element.isDisplayed();
+    }
 }

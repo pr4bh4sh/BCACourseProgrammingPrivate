@@ -1,8 +1,7 @@
 import { Given, Then, When } from '@wdio/cucumber-framework';
-import { expect, browser, $ } from '@wdio/globals';
-import HomePage from '../../src/pages/home.page.js';
-import DriverUtils from '../../src/framework/utils/driver.utils.js';
-import ElementUtils from '../../src/framework/utils/element.utils.js';
+import { expect, browser } from '@wdio/globals';
+import HomePage from '../../src/pages/home.page';
+import DriverUtils from '../../src/utils/driver.utils';
 
 Given(/^the "([^"]*)" is displayed$/, async (label) => {
     await HomePage.getElementByLabel(label).waitForDisplayed({ timeout: 20000 });
@@ -13,9 +12,15 @@ Then(/^I should see the "([^"]*)"$/, async (label) => {
 });
 
 Then(/^I should see the following cards:$/, async (dataTable: any) => {
-    const cards = dataTable.raw();
+    const cards = dataTable.raw().map((row: string[]) => row[0]);
     for (const card of cards) {
-        await expect(HomePage.getElementByLabel(card[0])).toBeDisplayed();
+        const isDisplayed = await HomePage.isCardDisplayed(card);
+        if (!isDisplayed) {
+            console.log(`❌ Card "${card}" was NOT displayed`);
+        } else {
+            console.log(`✓ Card "${card}" is displayed`);
+        }
+        await expect(isDisplayed).toBe(true, `Expected card "${card}" to be displayed, but it was not found`);
     }
 });
 
@@ -26,16 +31,13 @@ When(/^I scroll to the "([^"]*)" card$/, async (label) => {
 
 // Tap on card by label
 When(/^I tap on the "([^"]*)" card$/, async (label) => {
-    const element = HomePage.getElementByLabel(label);
-    await element.waitForDisplayed({ timeout: 10000 });
-    await element.click();
+    await HomePage.tapCard(label);
 });
 
 // Verify button or text is displayed using multiple strategies
 Then(/^I should see the "([^"]*)" button$/, async (buttonLabel) => {
-    const element = await ElementUtils.getElementByMultipleStrategies(buttonLabel, ['label', 'text']);
-    await element.waitForDisplayed({ timeout: 10000 });
-    await expect(element).toBeDisplayed();
+    const isDisplayed = await HomePage.isButtonDisplayed(buttonLabel);
+    await expect(isDisplayed).toBe(true, `Expected button "${buttonLabel}" to be displayed, but it was not found`);
 });
 
 // Go back to home
@@ -47,41 +49,37 @@ When(/^I go back to home$/, async () => {
 
 // Tap notifications button
 When(/^I tap on the notifications button$/, async () => {
-    await HomePage.notificationsButton.click();
+    await HomePage.tapNotificationsButton();
 });
 
 // Verify notifications panel is displayed
 Then(/^the notifications panel should be displayed$/, async () => {
-    // Check if the notifications panel/bottom sheet is visible
-    // Using a generic approach to find scrollable content
-    const notificationsPanel = await $('android.widget.ScrollView');
-    await notificationsPanel.waitForDisplayed({ timeout: 10000 });
-    await expect(notificationsPanel).toBeDisplayed();
+    const isDisplayed = await HomePage.isNotificationsPanelDisplayed();
+    await expect(isDisplayed).toBe(true, `Expected notifications panel to be displayed, but it was not found`);
 });
 
 // Scroll down in notifications panel
 When(/^I scroll down in the notifications panel$/, async () => {
-    const { height } = await browser.getWindowSize();
-    await DriverUtils.swipe(
-        { x: 500, y: height * 0.7 },
-        { x: 500, y: height * 0.3 }
-    );
+    await HomePage.scrollDownInNotifications();
 });
 
 // Verify additional notification content
 Then(/^I should see additional notification content$/, async () => {
-    // After scrolling, verify that content is still visible
-    const notificationsPanel = await $('android.widget.ScrollView');
-    await expect(notificationsPanel).toBeDisplayed();
+    const isDisplayed = await HomePage.isNotificationsPanelDisplayed();
+    await expect(isDisplayed).toBe(true, `Expected additional notification content to be visible in the notifications panel`);
 });
 
 // Verify cards are displayed (simpler than clickable check)
 Then(/^the following cards should be displayed:$/, async (dataTable: any) => {
-    const cards = dataTable.raw();
+    const cards = dataTable.raw().map((row: string[]) => row[0]);
     for (const card of cards) {
-        const element = HomePage.getElementByLabel(card[0]);
-        await element.waitForDisplayed({ timeout: 10000 });
-        await expect(element).toBeDisplayed();
+        const isDisplayed = await HomePage.isCardDisplayed(card);
+        if (!isDisplayed) {
+            console.log(`❌ Card "${card}" was NOT displayed`);
+        } else {
+            console.log(`✓ Card "${card}" is displayed`);
+        }
+        await expect(isDisplayed).toBe(true, `Expected card "${card}" to be displayed, but it was not found`);
     }
 });
 

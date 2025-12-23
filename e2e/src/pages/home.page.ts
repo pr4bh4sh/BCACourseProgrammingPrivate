@@ -1,21 +1,9 @@
-import { $ } from '@wdio/globals';
-import BasePage from '../framework/pages/base.page.js';
+import { $, browser } from '@wdio/globals';
+import BasePage from './base.page';
+import ElementUtils from '../utils/element.utils';
+import DriverUtils from '../utils/driver.utils';
 
 class HomePage extends BasePage {
-    /**
-     * Get an element by its natural accessibility label
-     * In WebdriverIO/Appium, $(`~label`) matches accessibilityLabel (Android/iOS)
-     */
-    getElementByLabel(label: string) {
-        return $(`~${label}`);
-    }
-
-    /**
-     * Check if an element with a specific label is displayed
-     */
-    async isLabelDisplayed(label: string) {
-        return (await this.getElementByLabel(label).isDisplayed());
-    }
 
     // Header Elements
     get menuButton() { return $('~Open Menu'); }
@@ -49,6 +37,62 @@ class HomePage extends BasePage {
     // Helper method to get semester card by number
     getSemesterCard(semesterNumber: number) {
         return $(`id=home.card.sem${semesterNumber}`);
+    }
+
+    /**
+     * Tap on a card by label
+     */
+    async tapCard(label: string) {
+        await this.tapByLabel(label, 15000);
+    }
+
+    /**
+     * Tap on notifications button - uses ElementUtils for consistency
+     */
+    async tapNotificationsButton() {
+        await ElementUtils.clickElement(this.notificationsButton, 10000);
+    }
+
+    /**
+     * Get notifications panel element
+     */
+    getNotificationsPanel() {
+        return $('android.widget.ScrollView');
+    }
+
+    /**
+     * Check if button is displayed using multiple locator strategies
+     * Tries: accessibility label first, then text content
+     */
+    async isButtonDisplayed(buttonLabel: string): Promise<boolean> {
+        const element = await ElementUtils.getElementByMultipleStrategies(buttonLabel, ['label', 'text']);
+        return await this.isElementDisplayed(element, 10000);
+    }
+
+    /**
+     * Check if notifications panel is displayed
+     */
+    async isNotificationsPanelDisplayed(): Promise<boolean> {
+        const panel = this.getNotificationsPanel();
+        return await this.isElementDisplayed(panel, 10000);
+    }
+
+    /**
+     * Scroll down in notifications panel
+     */
+    async scrollDownInNotifications() {
+        const { height } = await browser.getWindowSize();
+        await DriverUtils.swipe(
+            { x: 500, y: height * 0.7 },
+            { x: 500, y: height * 0.3 }
+        );
+    }
+
+    /**
+     * Check if a card is displayed by label
+     */
+    async isCardDisplayed(cardLabel: string): Promise<boolean> {
+        return await this.isElementDisplayedByLabel(cardLabel, 10000);
     }
 }
 
