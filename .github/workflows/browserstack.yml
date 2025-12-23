@@ -65,7 +65,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: browserstack-allure-report
-          path: e2e/allure-report/
+          path: e2e/reports/allure-report/
           retention-days: 30
 
       - name: Upload Allure results
@@ -73,7 +73,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: browserstack-allure-results
-          path: e2e/allure-results/
+          path: e2e/reports/allure-results/
           retention-days: 30
 
       - name: Comment PR with results
@@ -82,7 +82,7 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = './e2e/allure-results';
+            const path = './e2e/reports/allure-results';
             
             let comment = '## 📱 BrowserStack Test Results\n\n';
             comment += `**Build:** #${{ github.run_number }}\n\n`;

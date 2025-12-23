@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import { browser } from '@wdio/globals';
-import { config as sharedConfig } from './wdio.shared.conf.js';
+import { config as sharedConfig } from './wdio.shared.conf';
 
 /**
  * Check if a port is in use
@@ -70,7 +70,7 @@ export const config = {
 
                         // Log: Specifies the file path where Appium server logs will be written.
                         // Useful for troubleshooting server-side issues after a test run.
-                        log: './logs/appium.log',
+                        log: './reports/logs/appium.log',
 
                         // Use Plugins: Specifies which Appium plugins to load on startup.
                         // ENABLE: To extend Appium's functionality (e.g., 'inspector' for the web-based element inspector).

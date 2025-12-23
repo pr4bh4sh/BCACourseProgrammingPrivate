@@ -112,6 +112,8 @@ tmp/
 *.json
 !e2e/**/*.json
 !e2e/*.json
-e2e/allure-report
-e2e/allure-results
-
+e2e/results/*
+# WebdriverIO/Appium outputs
+e2e/reports/*
+e2e/reports/allure-results/*
+e2e/reports/allure-report/*

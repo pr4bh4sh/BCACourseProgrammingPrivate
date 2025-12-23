@@ -56,14 +56,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: allure-report
-          path: e2e/allure-report
+          path: e2e/reports/allure-report
 
       - name: Deploy Allure Report to GitHub Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: e2e/allure-report
+          publish_dir: e2e/reports/allure-report
           publish_branch: gh-pages
 
       - name: Log GitHub Pages URL

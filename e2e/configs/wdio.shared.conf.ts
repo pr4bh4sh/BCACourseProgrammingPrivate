@@ -2,8 +2,23 @@ import type { Options } from '@wdio/types';
 import { browser } from '@wdio/globals';
 import allureReporter from '@wdio/allure-reporter';
 import { join } from 'path';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, existsSync, mkdirSync } from 'fs';
 import { execSync } from 'node:child_process';
+
+const reportRoot = join(process.cwd(), 'reports');
+const logsDir = join(reportRoot, 'logs');
+const allureResultsDir = join(reportRoot, 'allure-results');
+
+// Ensure report directories exist before reporters/services write to them.
+if (!existsSync(reportRoot)) {
+    mkdirSync(reportRoot, { recursive: true });
+}
+if (!existsSync(logsDir)) {
+    mkdirSync(logsDir, { recursive: true });
+}
+if (!existsSync(allureResultsDir)) {
+    mkdirSync(allureResultsDir, { recursive: true });
+}
 
 /**
  * Shared base configuration for all WebdriverIO test runs.
@@ -58,7 +73,7 @@ export const config: Options.Testrunner = {
     reporters: [
         'spec',
         ['allure', {
-            outputDir: 'allure-results',
+            outputDir: allureResultsDir,
             disableWebdriverStepsReporting: true,
             disableWebdriverScreenshotsReporting: true, // Avoid duplicate screenshots
         }]
@@ -153,7 +168,7 @@ export const config: Options.Testrunner = {
             }
 
             // Attach Appium server logs
-            const appiumLogPath = join(process.cwd(), 'appium.log');
+            const appiumLogPath = join(logsDir, 'appium.log');
             if (existsSync(appiumLogPath)) {
                 try {
                     const logContent = readFileSync(appiumLogPath, 'utf-8');
