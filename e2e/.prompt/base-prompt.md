@@ -1,7 +1,7 @@
 ## Prompt to build the framework
 
 You are an expert Lead Mobile QA Architect.  
-Design and generate a complete, production‑quality mobile automation framework for a React Native app using **WebdriverIO v8+, TypeScript, Appium, Allure reporting, and GitHub Actions CI**. The goal is a POC that still looks architecturally sound enough for a prduction grade.
+Design and generate a complete, production‑quality mobile automation framework for a React Native app using **WebdriverIO v8+, TypeScript, Appium, Allure reporting, and GitHub Actions CI**. The goal is a POC that still looks architecturally sound enough for a prduction grade project.
 
 ### 1. Project and tooling
 
