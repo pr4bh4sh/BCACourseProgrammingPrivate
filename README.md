@@ -61,7 +61,7 @@ This project grows with the community. Whether you're fixing a typo or adding a 
 1. **Fork** this repository
 2. Clone it:
    ```bash
-   git clone https://github.com/DevVibhor/BCACourseProgramming
+   git clone https://github.com/pr4bh4sh/BCACourseProgrammingPrivate.git
    ```
 
 

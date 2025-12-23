@@ -41,7 +41,7 @@ cd android && ./gradlew assembleDebug
 **iOS (Simulator)**:
 ```bash
 # Build .app bundle
-xcodebuild -workspace ios/BCAFresh.xcworkspace -configuration Debug -scheme BCAFresh -sdk iphonesimulator -derivedDataPath Build
+xcodebuild -workspace ios/BCAFresh.xcworkspace -configuration Debug -scheme BCAFresh -sdk iphonesimulator -derivedDataPath Build -quiet
 # Output: Build/Build/Products/Debug-iphonesimulator/BCAFresh.app
 ```
 
