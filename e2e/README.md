@@ -1,6 +1,10 @@
 # Mobile E2E Automation Framework
 
-**Documentation:** [Framework Architecture](./doc/FRAMEWORK_ARCHITECTURE.md) | **Reports:** [Latest Test Results](https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/)
+[**Assignment submission Doc**](doc/QA-Automation-Review.md)
+
+**Documentation:** [Framework Architecture](./doc/FRAMEWORK_ARCHITECTURE.md)
+
+**Reports:** [Latest Allure Test Results](https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/) | [Browserstack result sample](https://app-automate.browserstack.com/projects/BCACourseProgrammingProject/builds/CI+Build/8?public_token=1f3962fa7e1ced14a5796d5fdb16669e4a609ea17228d584394823367fc26d65)
 
 ## Tech Stack
 
