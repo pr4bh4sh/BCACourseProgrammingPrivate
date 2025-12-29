@@ -6,38 +6,45 @@ This document provides an overview of the mobile automation framework architectu
 
 ```
 e2e/
-├── configs/                      # WebdriverIO configuration files
-│   ├── wdio.conf.ts             # Base configuration (shared settings)
-│   ├── wdio.android.conf.ts     # Android-specific capabilities
-│   └── wdio.ios.conf.ts         # iOS-specific capabilities
+├── package.json                 # Node.js dependencies and scripts
+├── package-lock.json            # Locked dependency versions
+├── README.md                    # Project documentation and usage
+├── tsconfig.json                # TypeScript configuration
+├── configs/                     # WebdriverIO/Appium configuration files
+│   ├── wdio.shared.conf.ts              # Base/shared configuration
+│   ├── wdio.shared.local.appium.conf.ts # Local Appium runner settings
+│   ├── wdio.android.app.cucumber.conf.ts# Android (App + Cucumber) config
+│   ├── wdio.android.ci.conf.ts          # Android CI capabilities
+│   ├── wdio.ios.conf.ts                 # iOS-specific capabilities
+│   └── browserstack/                    # BrowserStack-related configs/assets
 │
-├── src/                         # Source code for framework and page objects
-│   ├── framework/               # Core framework utilities
-│   │   ├── pages/              # Base page object classes
-│   │   │   └── base.page.ts    # Common page object methods
-│   │   └── utils/              # Reusable utility functions
-│   │       ├── driver.utils.ts # Device interactions (scroll, swipe, wait)
-│   │       ├── element.utils.ts# Element operations (find, click, type)
-│   │       └── file.utils.ts   # File and data management
-│   │
-│   └── pages/                   # Application-specific page objects
-│       └── home.page.ts        # Home screen page object
+├── doc/                         # Documentation
+│   ├── FRAMEWORK_ARCHITECTURE.md# Architecture overview (this document)
+│   └── browserstack_setup.md    # BrowserStack setup guide
+│
+├── src/                         # Source code for page objects
+│   └── pages/                   # Application-specific page objects and base
+│       ├── base.page.ts         # Common page object methods
+│       └── home.page.ts         # Home screen page object
+│   └── utils/                   # Reusable utilities
+│       ├── driver.utils.ts      # Device interactions (scroll, swipe, wait)
+│       ├── element.utils.ts     # Element operations (find, click, type)
+│       └── file.utils.ts        # File and data management
 │
 ├── tests/                       # Test files
-│   ├── features/               # Gherkin feature files (BDD)
-│   │   └── home.feature        # Home screen test scenarios
-│   └── steps/                  # Step definitions (TypeScript)
-│       └── home.steps.ts       # Home screen step implementations
+│   ├── features/                # Gherkin feature files (BDD)
+│   └── steps/                   # Step definitions (TypeScript)
 │
 ├── scripts/                     # Utility scripts
-│   └── download-builds.sh      # Script to download latest APK
+│   └── download-builds.sh       # Script to download latest builds/APK
 │
-├── allure-results/             # Raw test results (JSON)
-├── allure-report/              # Generated HTML reports
-├── appium.log                  # Appium server logs
-├── package.json                # Node.js dependencies and scripts
-└── tsconfig.json               # TypeScript configuration
+├── reports/                     # Consolidated run artifacts and reports (safe to clean)
+│   ├── allure-results/          # Raw Allure result artifacts (JSON, attachments)
+│   ├── allure-report/           # Generated Allure HTML reports
+│   └── logs/                    # Additional logs
 ```
+
+Tip: `npm run allure:clean` deletes the `reports/` folder; every run will recreate it.
 
 ## Framework Layers
 
@@ -59,30 +66,17 @@ The framework is organized into distinct layers, each with specific responsibili
   - Location: `src/pages/`
   - Example: `home.page.ts`
   - Contains selectors and methods for interacting with specific screens
-  - Provides clean API for test steps
+  - Single responsibility: one page object per screen; it owns selectors plus user actions only
+  - Provides clean API for test steps while hiding locator details
 
 - **Base Page**: Common functionality inherited by all page objects
-  - Location: `src/framework/pages/base.page.ts`
+  - Location: `src/pages/base.page.ts`
   - Reusable methods like `waitForElement()`, `tapElement()`
   - Reduces code duplication
 
-### 3. Framework Utilities
-- **Driver Utils**: Device-level interactions
-  - Location: `src/framework/utils/driver.utils.ts`
-  - Methods: wait, scroll, swipe, background app, hide keyboard
-
-- **Element Utils**: Element-level operations
-  - Location: `src/framework/utils/element.utils.ts`
-  - Methods: find, click, type, verify, get text
-
-- **File Utils**: Test data and fixture management
-  - Location: `src/framework/utils/file.utils.ts`
-  - Read test data from JSON files
-  - Handle file paths and attachments
-
-### 4. Appium Layer
+### 3. Appium Configration Layer
 - **WebdriverIO**: Test runner that orchestrates execution
-  - Configuration: `configs/wdio.conf.ts`
+  - Configuration: `configs/wdio.shared.conf.ts` (base) with platform-specific overrides such as `configs/wdio.android.app.cucumber.conf.ts`, `configs/wdio.android.ci.conf.ts`, and `configs/wdio.ios.conf.ts`
   - Manages test lifecycle and reporting
   - Handles parallel execution
 
@@ -91,7 +85,7 @@ The framework is organized into distinct layers, each with specific responsibili
   - Translates commands to native automation APIs
   - Runs as a service during test execution
 
-### 5. Mobile Application
+### 4. Mobile Application
 - **React Native App**: The application under test
   - Android APK or iOS IPA
   - Contains testID attributes for automation
@@ -118,7 +112,7 @@ Each layer has a single responsibility:
 - Tests describe behavior
 - Steps implement test logic
 - Page objects handle UI interaction
-- Utils provide reusable functionality
+- Base page provides reusable functionality
 
 ### Reusability
 - Base page class shared by all page objects
@@ -148,9 +142,7 @@ Feature File
     ↓
 Step Definitions
     ↓
-Page Objects → Base Page
-    ↓              ↓
-Element Utils ← Driver Utils
+Page Objects (includes Base Page)
     ↓
 WebdriverIO
     ↓
@@ -158,6 +150,6 @@ Appium Server
     ↓
 Mobile App
     ↓
-Test Results → Allure Reporter → HTML Report → GitHub Pages
+Test Results → Allure Reporter → reports/allure-results → reports/allure-report (HTML)
 ```
 

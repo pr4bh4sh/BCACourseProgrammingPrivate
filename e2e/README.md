@@ -1,6 +1,6 @@
 # Mobile E2E Automation Framework
 
-**Documentation:** [Framework Architecture](FRAMEWORK_ARCHITECTURE.md) | **Reports:** [Latest Test Results](https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/)
+**Documentation:** [Framework Architecture](./doc/FRAMEWORK_ARCHITECTURE.md) | **Reports:** [Latest Test Results](https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/)
 
 ## Tech Stack
 
@@ -91,25 +91,6 @@ Make sure you have these installed:
    ```
    You should see your emulator listed.
 
-### iOS Simulator (macOS only)
-
-1. **Open Xcode** → Window → Devices and Simulators
-
-2. **Create a simulator** (if needed):
-   - Click the "+" button
-   - Choose device type (e.g., iPhone 15)
-   - Select iOS version (15.0+)
-
-3. **Start the simulator**:
-   ```bash
-   open -a Simulator
-   ```
-
-4. **Verify it's running**:
-   ```bash
-   xcrun simctl list devices | grep Booted
-   ```
-
 ## Running Tests
 
 ### Android Tests
@@ -120,13 +101,16 @@ Make sure your Android emulator is running, then:
 npm run android:cucumber
 ```
 
-### iOS Tests
+### BrowserStack (cloud Android)
 
-Make sure your iOS simulator is running, then:
+Follow the setup in [doc/browserstack_setup.md](./doc/browserstack_setup.md), export BrowserStack credentials, then run:
 
 ```bash
-npm run ios
+npm run android:browserstack
 ```
+
+- Uses [configs/browserstack/wdio.android.bs.app.conf.ts](./configs/browserstack/wdio.android.bs.app.conf.ts) for capabilities.
+- CI workflow: [../.github/workflows/browserstack.yml](../.github/workflows/browserstack.yml).
 
 ### View Test Reports
 
@@ -148,31 +132,10 @@ Edit the config files in `configs/`:
 
 - **`wdio.conf.ts`** - Base configuration (timeouts, reporters, hooks)
 - **`wdio.android.conf.ts`** - Android-specific settings (device name, app path)
-- **`wdio.ios.conf.ts`** - iOS-specific settings
+- **`configs/browserstack/wdio.android.bs.app.conf.ts`** - BrowserStack cloud run config; CI workflow in `../.github/workflows/browserstack.yml`.
 
-### Common Customizations
 
-**Change device name** (Android):
-```typescript
-// configs/wdio.android.conf.ts
-capabilities: [{
-  'appium:deviceName': 'Pixel_5_API_36', // Your emulator name
-}]
-```
-
-**Change app path**:
-```typescript
-'appium:app': path.join(process.cwd(), 'apps/your-app.apk'),
-```
-
-**Adjust timeouts**:
-```typescript
-// configs/wdio.conf.ts
-waitforTimeout: 10000,        // Element wait timeout
-connectionRetryTimeout: 120000, // Appium connection timeout
-```
-
-## What Gets Captured on Failures
+## What Gets Captured on Failures for reporting
 
 When a test fails, the framework automatically captures:
 
@@ -194,14 +157,11 @@ All these are attached to the Allure report for easy debugging.
 ```bash
 # Android: Check if emulator is running
 adb devices
-
-# iOS: Check if simulator is booted
-xcrun simctl list devices | grep Booted
 ```
 
 ### "App not found"
 
-**Problem**: The APK/IPA file doesn't exist.
+**Problem**: The APK file doesn't exist.
 
 **Solution**:
 ```bash
@@ -245,7 +205,7 @@ pkill -f appium
 
 Tests run automatically on GitHub Actions for every push and pull request.
 
-**Workflow**: `.github/workflows/mobile-tests.yml`
+**Workflow of CI pipeline**: `.github/workflows/mobile-tests.yml`
 
 The CI pipeline:
 1. Sets up Node.js and dependencies
@@ -262,49 +222,58 @@ The CI pipeline:
 ### 1. Create a Feature File
 
 ```gherkin
-# tests/features/login.feature
-Feature: User Login
+# tests/features/home.feature
+Feature: Home Screen Verification
 
-  Scenario: Successful login
-    Given I am on the login screen
-    When I enter email "user@example.com"
-    And I enter password "password123"
-    And I tap the login button
-    Then I should see the home screen
+  @home @smoke
+  Scenario: Verify main dashboard cards
+    Given the "Open Menu" is displayed
+    Then the following cards should be displayed:
+      | Semester 1 |
+      | Semester 6 |
 ```
 
 ### 2. Create Step Definitions
 
 ```typescript
-// tests/steps/login.steps.ts
-import { Given, When, Then } from '@wdio/cucumber-framework';
-import LoginPage from '../../src/pages/login.page';
+// tests/steps/home.steps.ts
+import { Given, Then } from '@wdio/cucumber-framework';
+import { expect } from '@wdio/globals';
+import HomePage from '../../src/pages/home.page';
 
-Given('I am on the login screen', async () => {
-  await LoginPage.waitForPageLoad();
+Given(/^the "([^"]*)" is displayed$/, async (label) => {
+  await HomePage.getElementByLabel(label).waitForDisplayed({ timeout: 20000 });
 });
 
-When('I enter email {string}', async (email: string) => {
-  await LoginPage.enterEmail(email);
+Then(/^the following cards should be displayed:$/, async (dataTable: any) => {
+  const cards = dataTable.raw().map((row: string[]) => row[0]);
+  for (const card of cards) {
+    const isDisplayed = await HomePage.isCardDisplayed(card);
+    await expect(isDisplayed).toBe(true, `Expected card "${card}" to be displayed`);
+  }
 });
 ```
 
 ### 3. Create Page Object
 
 ```typescript
-// src/pages/login.page.ts
+// src/pages/home.page.ts
+import { $ } from '@wdio/globals';
 import BasePage from '../framework/pages/base.page';
 
-class LoginPage extends BasePage {
-  get emailInput() { return $('~email-input'); }
-  get passwordInput() { return $('~password-input'); }
-  
-  async enterEmail(email: string) {
-    await this.emailInput.setValue(email);
+class HomePage extends BasePage {
+  get menuButton() { return $('~Open Menu'); }
+
+  async tapCard(label: string) {
+    await this.tapByLabel(label, 15000);
+  }
+
+  async isCardDisplayed(cardLabel: string): Promise<boolean> {
+    return await this.isElementDisplayedByLabel(cardLabel, 10000);
   }
 }
 
-export default new LoginPage();
+export default new HomePage();
 ```
 
 ## Best Practices
@@ -318,7 +287,6 @@ export default new LoginPage();
 
 ## Need Help?
 
-- Check the [Architecture Overview](ARCHITECTURE.md) to understand the framework structure
+- Check the [Architecture Overview](./doc/FRAMEWORK_ARCHITECTURE.md) to understand the framework structure
 - Review existing tests in `tests/features/` for examples
 - Check Allure reports for detailed failure information
-- Review Appium logs in `appium.log`

@@ -67,21 +67,7 @@ export BROWSERSTACK_ACCESS_KEY='your_access_key'
 export BROWSERSTACK_APP_ID='your_app_id'
 ```
 
-## Step 4: Add Secrets to GitHub Repository
-To enable automated testing via GitHub Actions, add your BrowserStack credentials as repository secrets:
-
-### How to Add GitHub Secrets:
-1. Navigate to your repository on GitHub
-2. Go to **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret**
-4. Add the following secrets:
-   - **BROWSERSTACK_USERNAME** - Your BrowserStack username
-   - **BROWSERSTACK_ACCESS_KEY** - Your BrowserStack access key
-   - **BROWSERSTACK_APP_ID** - Your uploaded app ID (e.g., `bs://5f92c6c364aea06c0780adb9f5e0714ecb338239`)
-
-For detailed instructions, see: [GitHub Documentation - Using Encrypted Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
-
-## Step 5: Run Tests Locally
+## Step 4: Run Tests Locally
 Execute your tests using npm:
 ```bash
 npm run android:browserstack
@@ -93,10 +79,24 @@ This will:
 3. Run your Cucumber feature tests on the specified device
 4. Generate an Allure report with results
 
+## Step 5: Add Secrets to GitHub Repository
+To enable automated testing via GitHub Actions, add your BrowserStack credentials as repository secrets:
+
+### How to Add GitHub Secrets:
+1. Navigate to your repository on GitHub
+2. Go to **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Add the following secrets:
+   - **BROWSERSTACK_USERNAME** - Your BrowserStack username
+   - **BROWSERSTACK_ACCESS_KEY** - Your BrowserStack access key
+
+For detailed instructions, see: [GitHub Documentation - Using Encrypted Secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
+
+
 ## Step 6: Run Tests via GitHub Actions
 The BrowserStack workflow is configured to run manually:
 
-1. Go to **Actions** tab in your GitHub repository
+1. Go to [Actions](https://github.com/pr4bh4sh/BCACourseProgrammingPrivate/actions/workflows/browserstack.yml) tab in GitHub repository
 2. Select **BrowserStack E2E Tests** workflow
 3. Click **Run workflow**
 4. The workflow will:
