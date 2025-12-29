@@ -52,27 +52,27 @@ The framework is organized into distinct layers, each with specific responsibili
 
 ### 1. Test Layer
 - **Feature Files**: Test scenarios written in Gherkin syntax (BDD)
-  - Location: `tests/features/`
-  - Example: `home.feature`
+  - Location: [tests/features/](../tests/features/)
+  - Example: [home.feature](../tests/features/home.feature)
   - Human-readable test cases that describe application behavior
 
 - **Step Definitions**: TypeScript implementations that execute test steps
-  - Location: `tests/steps/`
+  - Location: [tests/steps/](../tests/steps/)
+  - Example: [home.steps.ts](../tests/steps/home.steps.ts)
   - Maps Gherkin steps to actual code
   - Calls page object methods to interact with the app
 
 ### 2. Page Object Layer
+- **Base Page**: Common functionality inherited by all page objects
+  - Location: [src/pages/base.page.ts](../src/pages/base.page.ts)
+  - Reusable methods like `waitForElement()`, `tapElement()`
+  - Reduces code duplication
 - **Page Objects**: Encapsulate UI elements and behaviors for each screen
-  - Location: `src/pages/`
-  - Example: `home.page.ts`
+  - Location: [src/pages/](../src/pages/)
+  - Example: [home.page.ts](../src/pages/home.page.ts)
   - Contains selectors and methods for interacting with specific screens
   - Single responsibility: one page object per screen; it owns selectors plus user actions only
   - Provides clean API for test steps while hiding locator details
-
-- **Base Page**: Common functionality inherited by all page objects
-  - Location: `src/pages/base.page.ts`
-  - Reusable methods like `waitForElement()`, `tapElement()`
-  - Reduces code duplication
 
 ### 3. Appium Configration Layer
 - **WebdriverIO**: Test runner that orchestrates execution
@@ -93,17 +93,76 @@ The framework is organized into distinct layers, each with specific responsibili
 
 ## Test Execution Flow
 
-1. **Developer writes test**: Creates feature file with Gherkin scenarios
-2. **Test runner starts**: WebdriverIO reads configuration and starts Appium
-3. **Appium connects**: Establishes connection to emulator/simulator
-4. **App launches**: Installs and opens the application
-5. **Steps execute**: Each Gherkin step runs its corresponding step definition
-6. **Page objects interact**: Step definitions call page object methods
-7. **Elements located**: Page objects find UI elements using selectors
-8. **Actions performed**: Appium sends commands to the app (tap, type, swipe)
-9. **Assertions verify**: Test checks expected vs actual results
-10. **Results captured**: Screenshots, videos, and logs collected on failure
-11. **Report generated**: Allure creates HTML report with all artifacts
+```
+┌─────────────────────────────────────────────────────────────┐
+│ 1. Developer/QA writes test                                 │
+│    Creates feature file with Gherkin scenarios              │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 2. Test runner starts                                       │
+│    WebdriverIO reads configuration and starts Appium        │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 3. Appium server                                            │
+│    Establishes connection to emulator/simulator             │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 4. Appium installs the AUT                                  │
+│    and opens/start the application                          │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 5. Cucumber Steps gets executed.                            │
+│    Each Gherkin step runs its corresponding step definition │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 6. Page objects interaction                                 │
+│    Step definitions call page object methods                │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 7. Elements located                                         │
+│    Page objects find UI elements using selectors            │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 8. Actions performed                                        │
+│    Appium sends commands to the app (tap, type, swipe)      │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+┌─────────────────────────────────────────────────────────────┐
+│ 9. Assertions verifed                                       │
+│    Test checks expected vs actual results                   │
+└────────────────────────────┬────────────────────────────────┘
+                             ↓
+                    ┌────────────────┐
+                    │  Test passed?  │───────────────────┬
+                    └────┬───────────┘                   |
+                         │                               |
+                    Yes  │                               |  NO
+                         ↓                               | 
+        ┌────────────────────────────────────┐           |
+        │ 10. Results captured               │           |
+        │     Test artifacts collected       │           |
+        └────────────┬───────────────────────┘           |
+                     │                                   ↓
+                     │      ┌─────────────────────────────────────┐
+                     │      │ 10. Failure artifacts               │
+                     │      │     Screenshots, videos, logs       │
+                     │      └─────────────┬───────────────────────┘
+                     │                    │
+                     └────────┬───────────┘
+                              ↓
+            ┌─────────────────────────────────────────────┐
+            │ 11. Report generated                        │
+            │     Allure creates HTML report with all     │
+            │     artifacts                               │
+            └─────────────────────────────────────────────┘
+```
 
 ## Key Design Principles
 

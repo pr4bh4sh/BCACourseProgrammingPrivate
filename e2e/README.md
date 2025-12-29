@@ -6,6 +6,8 @@
 
 **Reports:** [Latest Allure Test Results](https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/) | [Browserstack result sample](https://app-automate.browserstack.com/projects/BCACourseProgrammingProject/builds/CI+Build/8?public_token=1f3962fa7e1ced14a5796d5fdb16669e4a609ea17228d584394823367fc26d65)
 
+**CI Pipeline:** [Github workflow](https://github.com/pr4bh4sh/BCACourseProgrammingPrivate/actions/workflows/mobile-tests.yml)
+
 ## Tech Stack
 
 - **WebdriverIO v9** - Modern test runner for mobile automation
@@ -136,7 +138,7 @@ Edit the config files in `configs/`:
 
 - **`wdio.conf.ts`** - Base configuration (timeouts, reporters, hooks)
 - **`wdio.android.conf.ts`** - Android-specific settings (device name, app path)
-- **`configs/browserstack/wdio.android.bs.app.conf.ts`** - BrowserStack cloud run config; CI workflow in `../.github/workflows/browserstack.yml`.
+- **`configs/browserstack/wdio.android.bs.app.conf.ts`** - BrowserStack cloud run config.
 
 
 ## What Gets Captured on Failures for reporting

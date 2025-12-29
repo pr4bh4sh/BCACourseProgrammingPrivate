@@ -27,9 +27,9 @@ You can find detailed development setup in [Development.md](../../Development.md
 
 ## Selected Framework & Rationale (Pros / Cons)
 - **Choice**: WebdriverIO + Appium + Cucumber BDD.
-- **Pros**: Cross-platform, uses RN `testID`, rich waits/page objects, Allure reporting, CI-friendly. Appium supports application backdoor.
+- **Pros**: Cross-platform, uses React Native `testID`, rich waits/page objects, Allure reporting [sample][https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/], CI-friendly. Appium supports application backdoor.
 - **Cons**: Slower than Detox, emulator provisioning complexity, selector flakiness if a `testID` is missing.
-- **Technical fit**: Appium `uiautomator2` and XCUITest expose RN `testID` as `id`/`accessibilityId`, enabling stable selectors.
+- **Technical fit**: Appium `uiautomator2` and XCUITest expose React Native `testID` as `id`/`accessibilityId`, enabling stable selectors.
 - **BDD alignment**: Cucumber makes scenarios business-readable while Page Object Model (POM) encapsulates device actions; Allure integrates step annotations/screenshots.
 - **CI suitability**: WDIO is configurable with multiple CI tools, artifact publishing, and more emulator controls and configuration options. CI config is already defined in [.github/workflows/mobile-tests.yml](../../.github/workflows/mobile-tests.yml).
 - **Trade-offs with Detox and Maestro**:
@@ -67,7 +67,7 @@ npm run allure:report               # Generate Allure report and open it
 ## AI Usage & Judgement — How AI Was Used
 - **Code discovery**: I used AI to summarize app architecture and source code, analyze WCAG (accessibility standard) locators (accessibilityId, labels), and create a strategy for adding `testID` to make the application testable. Later, when the app was ready to test, it bootstrapped key files (WDIO config, project setup documentation, Page Object Model (POM) generated with screen dumps, tests).
 - **Documentation drafting**: Used AI to generate this and other documents in this repo, reviewed the document, and checked for accuracy of file-linked references.
-- **Test locator stability**: Created selector conventions for stable `testID` patterns, created locator mapping YAMLs. Utilize these YAMLs for generating and correcting locators in page object model files to reduce rework and trace locator changes.
+- **Test locator stability**: Created selector conventions for stable `testID` patteReact Natives, created locator mapping YAMLs. Utilize these YAMLs for generating and correcting locators in page object model files to reduce rework and trace locator changes.
 - **CI config generation and failure analysis**: Created CI config for automated test runs on GitHub Actions, analyze failures, and fix issues on CI runs.
 - **Test execution and fixes**: Used AI to analyze test failures and prompted it to suggest the probable root cause and possible fixes. Chose optimal fixes among the suggestions when AI provided options; and nudged for better analysis and course-corrected when I knew from experience that AI suggestions were wrong or not in the right direction.
 
@@ -81,7 +81,7 @@ npm run allure:report               # Generate Allure report and open it
 ### Where AI Was Most Helpful
 - **Repo mapping**: Quick identification of E2E stack and key configuration files.
 - **High level documentation**: Producing runnable commands and test/run sections fast. Verifying the steps by prompting it to follow the setup documents.
-- **Standardization**: Reinforcing `testID` patterns and BDD/Page Object best practices. Extracting the `testID` to locator mapping to be reused and mapped with Page Objects.
+- **Standardization**: Reinforcing `testID` patteReact Natives and BDD/Page Object best practices. Extracting the `testID` to locator mapping to be reused and mapped with Page Objects.
  - **Scaffolding**: Assisted auto-generation of page objects and step definitions aligned with ADB/UIAutomator UI hierarchy (XML dump), speeding initial coverage.
  - **CI overview**: Summarizing pipeline structure and report strategy. Analyze CI errors/failures faster as Copilot was able to access the errors with GitHub command line faster than human analysis time.
 
