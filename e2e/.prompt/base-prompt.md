@@ -88,7 +88,7 @@ Respond with:
 4. Example GitHub Actions workflow YAML that starts an emulator, runs Appium tests, and publishes Allure report artefacts/branch.[12][11][10]
 5. Any helper utilities (driver utils, file utils, reporting hooks).[6][7][1]
 
-Use modern, idiomatic TypeScript and WebdriverIO patterns and keep the code clean and interview‑ready.
+Use modern, idiomatic TypeScript and WebdriverIO patterns and keep the code clean.
 
 [1](https://spurqlabs.com/mobile-test-automation-using-webdriver-io-and-appium/)
 [2](https://www.youtube.com/watch?v=zWm0F3-ayQw)

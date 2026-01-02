@@ -97,6 +97,59 @@ Make sure you have these installed:
    ```
    You should see your emulator listed.
 
+## Using Appium Inspector
+
+Appium Inspector helps you find element selectors for writing tests.
+
+### Setup
+
+**Option 1: Web Inspector** (No installation needed)
+
+1. **Start Appium with CORS enabled**:
+   ```bash
+   appium --allow-cors --allow-insecure session_discovery
+   ```
+
+2. **Open** [inspector.appiumpro.com](https://inspector.appiumpro.com) in your browser
+
+3. **Configure session**:
+   - Host: `127.0.0.1`, Port: `4723`
+   - Add capabilities:
+     ```json
+     {
+       "platformName": "Android",
+       "appium:automationName": "UiAutomator2",
+       "appium:deviceName": "emulator-5554",
+       "appium:app": "/full/path/to/e2e/apps/app-debug.apk"
+     }
+     ```
+
+4. **Start Session** → App launches with inspectable UI
+
+**Option 2: Desktop App**
+
+Download from [Appium Inspector releases](https://github.com/appium/appium-inspector/releases)
+- For Apple Silicon: `Appium-Inspector-mac-arm64-<version>.dmg`
+- For Intel: `Appium-Inspector-mac-x64-<version>.dmg`
+
+Start Appium (without `--allow-cors`) and follow steps 2-4 above
+
+**Option 3: CLI Plugin** (For advanced users)
+
+```bash
+npm install -g appium-inspector
+appium --use-plugins=appium-inspector
+```
+Then open http://localhost:4723/inspector in your browser
+
+### Finding Selectors
+
+Click any element to see its attributes:
+- `resource-id: home.card.sem1` → Use `$('id=home.card.sem1')`
+- `content-desc: Open Menu` → Use `$('~Open Menu')`
+
+Test selectors by pasting them in the search field and clicking "Search".
+
 ## Running Tests
 
 ### Android Tests
@@ -105,6 +158,18 @@ Make sure your Android emulator is running, then:
 
 ```bash
 npm run android:cucumber
+```
+
+**Run specific tests by tag:**
+
+```bash
+npm run android:cucumber -- --cucumberOpts.tagExpression='@drawer'
+npm run android:cucumber -- --cucumberOpts.tagExpression='@smoke'
+npm run android:cucumber -- --cucumberOpts.tagExpression='@home and @smoke'
+```
+**Run sepecifig test by line number:**
+```bash
+npm run android:cucumber -- --spec tests/features/home.feature:3
 ```
 
 ### BrowserStack (cloud Android)
@@ -153,60 +218,6 @@ When a test fails, the framework automatically captures:
 
 All these are attached to the Allure report for easy debugging.
 
-## Troubleshooting
-
-### "No devices found"
-
-**Problem**: Appium can't find your emulator/simulator.
-
-**Solution**:
-```bash
-# Android: Check if emulator is running
-adb devices
-```
-
-### "App not found"
-
-**Problem**: The APK file doesn't exist.
-
-**Solution**:
-```bash
-# Download the latest Android APK
-npm run download:android
-
-# Or check the path in configs/wdio.android.conf.ts
-```
-
-### "Appium server not starting"
-
-**Problem**: Port 4723 might be in use.
-
-**Solution**:
-```bash
-# Kill any existing Appium processes
-pkill -f appium
-
-# Or manually specify a different port in configs/wdio.conf.ts
-```
-
-### "Tests are slow"
-
-**Problem**: Emulator performance issues.
-
-**Solution**:
-- Enable hardware acceleration in Android Studio
-- Allocate more RAM to the emulator (AVD settings)
-- Disable animations: `adb shell settings put global window_animation_scale 0`
-
-### "Element not found"
-
-**Problem**: Selector might be incorrect or element not visible.
-
-**Solution**:
-1. Check the UI Source Dump in the Allure report
-2. Use `testID` attributes (preferred over XPath)
-3. Add explicit waits in page objects
-
 ## CI/CD Integration
 
 Tests run automatically on GitHub Actions for every push and pull request.
@@ -224,6 +235,9 @@ The CI pipeline:
 **View live reports**: https://pr4bh4sh.github.io/BCACourseProgrammingPrivate/
 
 ## Writing New Tests
+
+<details>
+<summary>Click to expand guide for writing new tests</summary>
 
 ### 1. Create a Feature File
 
@@ -282,6 +296,8 @@ class HomePage extends BasePage {
 export default new HomePage();
 ```
 
+</details>
+
 ## Best Practices
 
 - Use testID attributes - More reliable than XPath
@@ -290,6 +306,65 @@ export default new HomePage();
 - Use scenario outlines - For data-driven tests
 - Reset app state - Each scenario should be independent
 - Add meaningful waits - Don't use hardcoded sleeps
+
+## Troubleshooting
+
+<details>
+<summary>Click to expand troubleshooting guide</summary>
+
+### "No devices found"
+
+**Problem**: Appium can't find your emulator/simulator.
+
+**Solution**:
+```bash
+# Android: Check if emulator is running
+adb devices
+```
+
+### "App not found"
+
+**Problem**: The APK file doesn't exist.
+
+**Solution**:
+```bash
+# Download the latest Android APK
+npm run download:android
+
+# Or check the path in configs/wdio.android.conf.ts
+```
+
+### "Appium server not starting"
+
+**Problem**: Port 4723 might be in use.
+
+**Solution**:
+```bash
+# Kill any existing Appium processes
+pkill -f appium
+
+# Or manually specify a different port in configs/wdio.conf.ts
+```
+
+### "Tests are slow"
+
+**Problem**: Emulator performance issues.
+
+**Solution**:
+- Enable hardware acceleration in Android Studio
+- Allocate more RAM to the emulator (AVD settings)
+- Disable animations: `adb shell settings put global window_animation_scale 0`
+
+### "Element not found"
+
+**Problem**: Selector might be incorrect or element not visible.
+
+**Solution**:
+1. Check the UI Source Dump in the Allure report
+2. Use `testID` attributes (preferred over XPath)
+3. Add explicit waits in page objects
+
+</details>
 
 ## Need Help?
 
