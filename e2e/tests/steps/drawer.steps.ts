@@ -3,6 +3,14 @@ import DrawerPage from '../../src/pages/drawer.page';
 import HomePage from '../../src/pages/home.page';
 import ElementUtils from '../../src/utils/element.utils';
 
+// Verify "Open Menu" button is displayed (catches specific element before generic page pattern)
+Given(/^the "Open Menu" is displayed$/i, async () => {
+    const element = await ElementUtils.getElementByLabel('Open Menu');
+    await expect(element).toBeDisplayed({
+        message: 'Expected "Open Menu" button to be displayed on the home page'
+    });
+});
+
 // Open the menu drawer (handles all variations)
 When(/^I open the (?:menu\s+)?drawer(?:\s+menu)?$/i, async () => {
     await HomePage.openMenuDrawer();
@@ -66,4 +74,12 @@ Then(/^I should see the following menu sections:$/i, async (dataTable: any) => {
     }
     
     await expect(failures.length).toBe(0, `Failed menu sections:\n${failures.join('\n')}`);
+});
+
+// Verify a specific element by accessibility label is displayed
+Then(/^I should see the "([^"]+)"$/i, async (elementLabel: string) => {
+    const element = await ElementUtils.getElementByLabel(elementLabel);
+    await expect(element).toBeDisplayed({
+        message: `Expected element "${elementLabel}" to be displayed, but it was not found`
+    });
 });

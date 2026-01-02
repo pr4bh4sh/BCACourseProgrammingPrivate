@@ -8,13 +8,13 @@ Feature: Drawer Menu Verification
     And the home page is displayed
     When I open the drawer menu
     Then I should see the following drawer items:
-      | C#         |
-      | CSS        |
-      | HTML       |
-      | JavaScript |
-      | R          |
-      | Python     |
-      | SQL        |
+      | C#               |
+      | CSS              |
+      | HTML             |
+      | JavaScript       |
+      | R                |
+      | Python           |
+      | SQL              |
       | YouTube          |
       | Twitter          |
       | Send Suggestions |
@@ -22,7 +22,8 @@ Feature: Drawer Menu Verification
 
   @drawer @smoke
   Scenario: Close the drawer from the menu
-    Given the "Open Menu" is displayed
+    Given the app is launched
+    And the home page is displayed
     When I open the drawer menu
     Then the drawer should be visible
     When I close the drawer menu
