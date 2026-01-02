@@ -1,6 +1,4 @@
-import { join } from "node:path";
-import { config as baseConfig } from "./wdio.shared.local.appium.conf.js";
-import { browser } from '@wdio/globals';
+import { config as baseConfig } from "./wdio.shared.local.appium.conf.ts";
 import path from "path";
 import url from "node:url";
 

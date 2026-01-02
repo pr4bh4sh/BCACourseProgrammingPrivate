@@ -1,5 +1,5 @@
 import { join } from 'node:path';
-import { config as baseConfig } from './wdio.conf.js';
+import { config as baseConfig } from './wdio.shared.conf.ts';
 import { browser } from '@wdio/globals';
 import path from 'path';
 import url from 'node:url';
