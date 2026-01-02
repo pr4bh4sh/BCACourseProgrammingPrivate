@@ -1,7 +1,9 @@
 import { Given, Then, When } from '@wdio/cucumber-framework';
+import { browser } from '@wdio/globals';
 import DrawerPage from '../../src/pages/drawer.page';
 import HomePage from '../../src/pages/home.page';
 import ElementUtils from '../../src/utils/element.utils';
+import DriverUtils from '../../src/utils/driver.utils';
 
 // Verify "Open Menu" button is displayed (catches specific element before generic page pattern)
 Given(/^the "Open Menu" is displayed$/i, async () => {
@@ -23,57 +25,73 @@ When(/^I close the drawer menu$/, async () => {
 
 // Verify list of items in drawer by label (handles both drawer items and menu sections)
 Then(/^I should see the following drawer items:$/, async (dataTable: any) => {
-    const items = dataTable.raw();
-    const failures: string[] = [];
+    const items = dataTable.raw().map((row: string[]) => row[0]);
     
-    for (const row of items) {
-        const label = row[0];
-        const isDisplayed = await DrawerPage.isItemDisplayed(label) || 
-                           await HomePage.isMenuSectionDisplayed(label);
+    for (const item of items) {
+        let isDisplayed = await DrawerPage.isItemDisplayed(item) || 
+                         await HomePage.isMenuSectionDisplayed(item);
+        
+        // If item is not visible, try scrolling to it
         if (!isDisplayed) {
-            console.log(`❌ Drawer item "${label}" was NOT displayed`);
-            failures.push(`Drawer item "${label}" was not displayed`);
+            console.log(`⚠️  Drawer item "${item}" not visible, attempting to scroll...`);
+            try {
+                await DriverUtils.scrollIntoViewAndroid(item);
+                // Wait a bit for scroll to complete and check again
+                await browser.pause(500);
+                isDisplayed = await DrawerPage.isItemDisplayed(item) || 
+                             await HomePage.isMenuSectionDisplayed(item);
+            } catch (scrollError) {
+                console.log(`⚠️  Could not scroll to "${item}":`, scrollError);
+            }
+        }
+        
+        await expect.soft(DrawerPage.getElementByLabel(item)).toBeDisplayed({
+            message: `Expected drawer item "${item}" to be visible in the drawer`,
+        });
+
+        if (!isDisplayed) {
+            console.log(`❌ Drawer item "${item}" was NOT displayed even after scrolling`);
         } else {
-            console.log(`✓ Drawer item "${label}" is displayed`);
+            console.log(`✓ Drawer item "${item}" is displayed`);
         }
     }
-    
-    await expect(failures.length).toBe(0, `Assertion failures:\n${failures.join('\n')}`);
+    expect.assertSoftFailures();
 });
 
 // Verify drawer visibility (parameterized for visible/not visible)
 Then(/^the drawer should (not )?be visible$/, async (notVisible: string) => {
-    const isOpen = await DrawerPage.isOpen();
     const shouldBeVisible = !notVisible; // If "not" is captured, shouldBeVisible = false
     
     if (shouldBeVisible) {
-        await expect(isOpen).toBe(true, 'Expected drawer to be visible, but it is not displayed');
+        await expect(DrawerPage.closeButton).toBeDisplayed({
+            message: 'Expected drawer to be visible, but it is not displayed'
+        });
     } else {
-        await expect(isOpen).toBe(false, 'Expected drawer to be closed, but it is still visible');
+        await expect(DrawerPage.closeButton).not.toBeDisplayed({
+            message: 'Expected drawer to be closed, but it is still visible'
+        });
     }
 });
 
 // Verify menu drawer is displayed
 Then(/^the (?:menu\s+)?drawer should be displayed$/i, async () => {
-    const isOpen = await DrawerPage.isOpen();
-    await expect(isOpen).toBe(true, 'Expected drawer to be displayed, but it is not visible');
+    await expect(DrawerPage.closeButton).toBeDisplayed({
+        message: 'Expected drawer to be displayed, but it is not visible'
+    });
 });
 
 // Verify menu drawer sections from data table
 Then(/^I should see the following menu sections:$/i, async (dataTable: any) => {
     const sections = dataTable.hashes();
-    const failures: string[] = [];
     
     for (const row of sections) {
         const sectionName = row.section;
-        const isDisplayed = await HomePage.isMenuSectionDisplayed(sectionName);
         
-        if (!isDisplayed) {
-            failures.push(`Menu section "${sectionName}" not displayed`);
-        }
+        await expect.soft(HomePage.getElementByLabel(sectionName)).toBeDisplayed({
+            message: `Expected menu section "${sectionName}" to be displayed`,
+        });
     }
-    
-    await expect(failures.length).toBe(0, `Failed menu sections:\n${failures.join('\n')}`);
+    expect.assertSoftFailures();
 });
 
 // Verify a specific element by accessibility label is displayed

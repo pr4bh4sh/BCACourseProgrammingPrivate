@@ -37,10 +37,10 @@ When(/^I tap on(?:\s+(?:the|a))?\s+(["\']?)(.+?)\1(?:\s+(?:card|button|section))
 // Verify list of cards with data table (MUST come before generic element visibility)
 Then(/^I should see the following cards:$/, async (dataTable: any) => {
     const cards = dataTable.raw().map((row: string[]) => row[0]);
-    
+
     for (const card of cards) {
         let isDisplayed = await HomePage.isCardDisplayed(card, 3000);
-        
+
         // If card is not visible, try scrolling to it
         if (!isDisplayed) {
             console.log(`⚠️  Card "${card}" not visible, attempting to scroll...`);
@@ -53,7 +53,7 @@ Then(/^I should see the following cards:$/, async (dataTable: any) => {
                 console.log(`⚠️  Could not scroll to "${card}":`, scrollError);
             }
         }
-        
+
         await expect.soft(HomePage.getElementByLabel(card)).toBeDisplayed({
             message: `Expected card "${card}" to be visible on the home screen`,
         });
@@ -63,8 +63,8 @@ Then(/^I should see the following cards:$/, async (dataTable: any) => {
         } else {
             console.log(`✓ Card "${card}" is displayed`);
         }
-        expect.assertSoftFailures();
     }
+    expect.assertSoftFailures();
 });
 
 Then(/^(.+?)\s+section title should be open$/i, async (title: string) => {
