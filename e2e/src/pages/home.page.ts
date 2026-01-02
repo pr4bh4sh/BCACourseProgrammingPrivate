@@ -5,9 +5,12 @@ import DriverUtils from '../utils/driver.utils';
 
 class HomePage extends BasePage {
 
+    // Page Title
+    get pageTitle() { return $('~Open Menu'); }
+
     // Header Elements
     get menuButton() { return $('~Open Menu'); }
-    get notificationsButton() { return $('~Notifications'); }
+    get notificationsButton() { return $('id=header.button.notifications'); }
     get backButton() { return $('id=header.button.back'); }
 
     // Semester Cards
@@ -91,8 +94,30 @@ class HomePage extends BasePage {
     /**
      * Check if a card is displayed by label
      */
-    async isCardDisplayed(cardLabel: string): Promise<boolean> {
-        return await this.isElementDisplayedByLabel(cardLabel, 10000);
+    async isCardDisplayed(cardLabel: string, timeout = 10000): Promise<boolean> {
+        return await this.isElementDisplayedByLabel(cardLabel, timeout);
+    }
+
+    /**
+     * Open the menu drawer
+     */
+    async openMenuDrawer() {
+        await ElementUtils.clickElement(this.menuButton, 10000);
+    }
+
+    /**
+     * Check if menu drawer is displayed
+     */
+    async isMenuDrawerDisplayed(): Promise<boolean> {
+        const drawer = $('id=drawer.menu');
+        return await this.isElementDisplayed(drawer, 10000);
+    }
+
+    /**
+     * Check if a menu section is displayed by label
+     */
+    async isMenuSectionDisplayed(sectionLabel: string): Promise<boolean> {
+        return await this.isElementDisplayedByLabel(sectionLabel, 10000);
     }
 }
 

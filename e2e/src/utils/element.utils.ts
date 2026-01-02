@@ -118,13 +118,17 @@ export default class ElementUtils {
     }
 
     /**
-     * Check if an element is displayed - waits for element and returns boolean
+     * Check if an element is displayed - returns boolean without throwing errors
      * @param element - The WebdriverIO element to check
      * @param timeout - Optional timeout in milliseconds (default: 10000)
      * @returns true if element is displayed, false otherwise
      */
     static async isElementDisplayed(element: any, timeout = 10000): Promise<boolean> {
-        await element.waitForDisplayed({ timeout });
-        return await element.isDisplayed();
+        try {
+            await element.waitForDisplayed({ timeout });
+            return await element.isDisplayed();
+        } catch (error) {
+            return false;
+        }
     }
 }
