@@ -30,7 +30,7 @@ class DrawerPage extends BasePage {
      * Is drawer open (Close button visible)
      */
     async isOpen(): Promise<boolean> {
-        return await this.isElementDisplayed(this.closeButton, 10000);
+        return await ElementUtils.isElementDisplayed(this.closeButton);
     }
 
     /**

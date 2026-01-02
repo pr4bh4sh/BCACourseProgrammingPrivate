@@ -4,7 +4,8 @@ Feature: Drawer Menu Verification
 
   @drawer @smoke
   Scenario: Verify drawer is open and key items are visible
-    Given the "Open Menu" is displayed
+    Given the app is launched
+    And the home page is displayed
     When I open the drawer menu
     Then I should see the following drawer items:
       | C#         |
@@ -14,12 +15,6 @@ Feature: Drawer Menu Verification
       | R          |
       | Python     |
       | SQL        |
-
-  @drawer @regression
-  Scenario: Verify social and policy items are visible
-    Given the "Open Menu" is displayed
-    When I open the drawer menu
-    Then I should see the following drawer items:
       | YouTube          |
       | Twitter          |
       | Send Suggestions |
@@ -29,5 +24,7 @@ Feature: Drawer Menu Verification
   Scenario: Close the drawer from the menu
     Given the "Open Menu" is displayed
     When I open the drawer menu
+    Then the drawer should be visible
     When I close the drawer menu
     Then I should see the "Open Menu"
+    And the drawer should not be visible
