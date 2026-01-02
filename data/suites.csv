@@ -1,0 +1,8 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","26789","Verify all main cards are displayed","Home Screen Verification","2026-01-02","broken","2026-01-02","","","",""
+"","19156","Close the drawer from the menu","Drawer Menu Verification","2026-01-02","passed","2026-01-02","","","",""
+"","47005","Verify drawer is open and key items are visible","Drawer Menu Verification","2026-01-02","broken","2026-01-02","","","",""
+"","12152","Open and scroll notifications panel","Home Screen Verification","2026-01-02","passed","2026-01-02","","","",""
+"","29806","Navigate to Interview Questions screen","Home Screen Verification","2026-01-02","broken","2026-01-02","","","",""
+"","38736","Verify social and policy items are visible","Drawer Menu Verification","2026-01-02","broken","2026-01-02","","","",""
+"","8948","Verify main dashboard components using natural accessibility labels","Home Screen Verification","2026-01-02","passed","2026-01-02","","","",""
