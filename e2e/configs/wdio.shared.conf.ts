@@ -88,17 +88,20 @@ export const config: Options.Testrunner = {
         timeout: 10 * 60 * 1000, // 10min for debugging
     },
     cucumberOpts: {
-        require: ['./tests/steps/**/*.ts'],
-        backtrace: true,
-        requireModule: [],
-        dryRun: false,
-        failFast: false,
-        snippets: true,
-        source: true,
-        strict: false,
-        tagExpression: '',
-        timeout: 60000, // 60 seconds
-        ignoreUndefinedDefinitions: false
+        require: [
+            join(process.cwd(), 'tests', 'steps', '**', '*.ts')
+        ], // <string[]> (file/dir) require files before executing features
+        backtrace: true, // <boolean> show full backtrace for errors
+        requireModule: ['ts-node/register'],
+        compiler: [], // <string[]> ("extension:module") require files with the given EXTENSION after requiring MODULE (repeatable)
+        dryRun: false, // <boolean> invoke formatters without executing steps
+        failFast: false, // <boolean> abort the run on first failure
+        snippets: true, // <boolean> hide step definition snippets for pending steps
+        source: true, // <boolean> hide source URIs
+        strict: false, // <boolean> fail if there are any undefined or pending steps
+        timeout: 60000, // <number> timeout for step definitions
+        ignoreUndefinedDefinitions: false, // <boolean> Enable this config to treat undefined definitions as warnings.
+        scenarioLevelReporter: false, // Enable this to make webdriver.io behave as if scenarios and not steps were the tests.
     },
 
     /**
