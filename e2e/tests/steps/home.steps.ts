@@ -1,85 +1,75 @@
 import { Given, Then, When } from '@wdio/cucumber-framework';
-import { expect, browser } from '@wdio/globals';
+import { browser } from '@wdio/globals';
 import HomePage from '../../src/pages/home.page';
+import SectionPage from '../../src/pages/section.page';
 import DriverUtils from '../../src/utils/driver.utils';
+import { getPage } from '../../src/utils/page.utils';
+import ElementUtils from '@src/utils/element.utils';
 
-Given(/^the "([^"]*)" is displayed$/, async (label) => {
-    await HomePage.getElementByLabel(label).waitForDisplayed({ timeout: 20000 });
+// App launch step with Android activity verification
+Given(/^the app is launched$/, async () => {
+    // App should already be launched by Appium
+    // Wait for app to be ready
+    await browser.pause(2000);
+    // TODO: check current activity is current app package, find alternative for iOS
+    // Verify current activity on Android (useful for debug & stability)
+    if (browser.isAndroid) {
+        try {
+            const activity = await browser.getCurrentActivity();
+            console.log(`Current Android activity: ${activity}`);
+        } catch (e) {
+            console.log('Could not retrieve current activity:', e);
+        }
+    }
 });
 
-Then(/^I should see the "([^"]*)"$/, async (label) => {
-    await expect(HomePage.getElementByLabel(label)).toBeDisplayed();
+// Generic page navigation - handles "home page", "interview page", etc.
+Given(/^(?:the )?(.+?)(?:\s+page)?\s+(?:is\s+)?displayed$/, async (pageName: string) => {
+    const page = await getPage(pageName);
+    await page.waitForPage();
 });
 
+// Generic tap action - handles "tap on card", "tap on menu item", "tap on button", etc.
+When(/^I tap on(?:\s+(?:the|a))?\s+(["\']?)(.+?)\1(?:\s+(?:card|button|section))?$/i, async (quote: string, elementName: string) => {
+    await HomePage.tapCard(elementName);
+});
+
+// Verify list of cards with data table (MUST come before generic element visibility)
 Then(/^I should see the following cards:$/, async (dataTable: any) => {
     const cards = dataTable.raw().map((row: string[]) => row[0]);
+    
     for (const card of cards) {
-        const isDisplayed = await HomePage.isCardDisplayed(card);
+        let isDisplayed = await HomePage.isCardDisplayed(card, 3000);
+        
+        // If card is not visible, try scrolling to it
         if (!isDisplayed) {
-            console.log(`❌ Card "${card}" was NOT displayed`);
+            console.log(`⚠️  Card "${card}" not visible, attempting to scroll...`);
+            try {
+                await DriverUtils.scrollIntoViewAndroid(card);
+                // Wait a bit for scroll to complete and check again
+                await browser.pause(500);
+                isDisplayed = await HomePage.isCardDisplayed(card, 3000);
+            } catch (scrollError) {
+                console.log(`⚠️  Could not scroll to "${card}":`, scrollError);
+            }
+        }
+        
+        await expect.soft(HomePage.getElementByLabel(card)).toBeDisplayed({
+            message: `Expected card "${card}" to be visible on the home screen`,
+        });
+
+        if (!isDisplayed) {
+            console.log(`❌ Card "${card}" was NOT displayed even after scrolling`);
         } else {
             console.log(`✓ Card "${card}" is displayed`);
         }
-        await expect(isDisplayed).toBe(true, `Expected card "${card}" to be displayed, but it was not found`);
+        expect.assertSoftFailures();
     }
 });
 
-// Scroll to element by label
-When(/^I scroll to the "([^"]*)" card$/, async (label) => {
-    await DriverUtils.scrollIntoViewAndroid(label);
-});
-
-// Tap on card by label
-When(/^I tap on the "([^"]*)" card$/, async (label) => {
-    await HomePage.tapCard(label);
-});
-
-// Verify button or text is displayed using multiple strategies
-Then(/^I should see the "([^"]*)" button$/, async (buttonLabel) => {
-    const isDisplayed = await HomePage.isButtonDisplayed(buttonLabel);
-    await expect(isDisplayed).toBe(true, `Expected button "${buttonLabel}" to be displayed, but it was not found`);
-});
-
-// Go back to home
-When(/^I go back to home$/, async () => {
-    await browser.back();
-    // Wait for home screen to be displayed
-    await HomePage.menuButton.waitForDisplayed({ timeout: 10000 });
-});
-
-// Tap notifications button
-When(/^I tap on the notifications button$/, async () => {
-    await HomePage.tapNotificationsButton();
-});
-
-// Verify notifications panel is displayed
-Then(/^the notifications panel should be displayed$/, async () => {
-    const isDisplayed = await HomePage.isNotificationsPanelDisplayed();
-    await expect(isDisplayed).toBe(true, `Expected notifications panel to be displayed, but it was not found`);
-});
-
-// Scroll down in notifications panel
-When(/^I scroll down in the notifications panel$/, async () => {
-    await HomePage.scrollDownInNotifications();
-});
-
-// Verify additional notification content
-Then(/^I should see additional notification content$/, async () => {
-    const isDisplayed = await HomePage.isNotificationsPanelDisplayed();
-    await expect(isDisplayed).toBe(true, `Expected additional notification content to be visible in the notifications panel`);
-});
-
-// Verify cards are displayed (simpler than clickable check)
-Then(/^the following cards should be displayed:$/, async (dataTable: any) => {
-    const cards = dataTable.raw().map((row: string[]) => row[0]);
-    for (const card of cards) {
-        const isDisplayed = await HomePage.isCardDisplayed(card);
-        if (!isDisplayed) {
-            console.log(`❌ Card "${card}" was NOT displayed`);
-        } else {
-            console.log(`✓ Card "${card}" is displayed`);
-        }
-        await expect(isDisplayed).toBe(true, `Expected card "${card}" to be displayed, but it was not found`);
-    }
+Then(/^(.+?)\s+section title should be open$/i, async (title: string) => {
+    await expect(ElementUtils.getElementByText(title)).toBeDisplayed({
+        message: `Expected ${title} title to be displayed, but it was not found`
+    });
 });
 
