@@ -28,8 +28,29 @@ export default class DriverUtils {
     /**
      * Scroll until element with text is found (Android specific)
      */
-    static async scrollIntoViewAndroid(text: string) {
-        await $(`android=new UiScrollable(new UiSelector().scrollable(true)).scrollIntoView(new UiSelector().textContains("${text}"))`);
+    static async scrollIntoViewAndroid(text: string, maxScrolls = 5) {
+        try {
+            // Try using accessibility label first (more reliable)
+            const element = await $(`~${text}`);
+            if (await element.isDisplayed()) {
+                return element;
+            }
+        } catch (e) {
+            // Element not visible, proceed with scrolling
+        }
+
+        // Use UiAutomator2 scroll strategy
+        await driver.execute('mobile: scrollGesture', {
+            left: 100,
+            top: 500,
+            width: 800,
+            height: 1500,
+            direction: 'down',
+            percent: 3.0
+        });
+
+        // Wait a bit for elements to load
+        await browser.pause(1000);
     }
 
     /**
