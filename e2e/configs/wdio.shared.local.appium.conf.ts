@@ -1,6 +1,6 @@
 import { execSync } from 'node:child_process';
 import { browser } from '@wdio/globals';
-import { config as sharedConfig } from './wdio.shared.conf';
+import { config as sharedConfig } from './wdio.shared.conf.js';
 
 /**
  * Check if a port is in use
