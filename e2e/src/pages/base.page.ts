@@ -3,6 +3,20 @@ import ElementUtils from '../utils/element.utils';
 
 export default class BasePage {
     /**
+     * Page title element - should be overridden in each page class
+     */
+    get pageTitle(): WebdriverIO.Element {
+        throw new Error('pageTitle getter must be implemented in the page class');
+    }
+
+    /**
+     * Wait for page title to be displayed (30 seconds timeout)
+     */
+    async waitForPage() {
+        await this.pageTitle.waitForDisplayed({ timeout: 30000 });
+    }
+
+    /**
      * Wait for element to be displayed
      */
     async waitForDisplayed(selector: string) {
