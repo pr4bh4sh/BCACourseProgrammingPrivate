@@ -1,4 +1,4 @@
-import { config as localAppiumConfig } from './wdio.shared.local.appium.conf.js';
+import { config as localAppiumConfig } from './wdio.shared.local.appium.conf.ts';
 import path from 'path';
 
 export const config = {
